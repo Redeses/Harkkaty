@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Harkkatyö</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="TV_UserN">User name</string>
+    <string name="TV_password">Password</string>
+    <string name="TV_FirstN">First name</string>
+    <string name="TV_LastN">Last name</string>
+    <string name="TV_DateOfBirth">Date of birth</string>
+    <string name="TV_address">Address</string>
+    <string name="TV_phoneNumber">Phonenumber</string>
+    <string name="TV_Email">Email</string>
+    <string name="TV_RePassword">Password again</string>
+    <string name="LogIn">Log In</string>
+    <string name="BT_cancel">Cancel</string>
+    <string name="BT_cont">Continue</string>
+    <string name="BT_back">Back</string>
+    <string name="BT_MakeAcc">Make account</string>
+    <string name="empty5">Log In</string>
+    <string name="empty4">Log In</string>
+</resources>
