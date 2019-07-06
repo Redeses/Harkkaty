@@ -17,6 +17,15 @@
     <string name="BT_cont">Continue</string>
     <string name="BT_back">Back</string>
     <string name="BT_MakeAcc">Make account</string>
-    <string name="empty5">Log In</string>
+    <string name="TV_datHint">dd.MM.YYYY</string>
     <string name="empty4">Log In</string>
+
+
+    <string name="country_prompt">Choose country</string>
+    <string-array name="country_arrays">
+        <item>None</item>
+        <item>Findland</item>
+        <item>USA</item>
+        <item>France</item>
+    </string-array>
 </resources>

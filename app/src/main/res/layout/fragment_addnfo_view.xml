@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".addnfoView">
+    tools:context=".addnfoView"
+    android:background="@color/white">
+
 
     <TextView
         android:id="@+id/lastnameT"
@@ -13,9 +15,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="114dp"
-        android:layout_marginRight="114dp"
-        android:layout_marginBottom="610dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginRight="105dp"
+        android:layout_marginBottom="654dp"
         android:hint="@string/TV_LastN"
         android:textSize="24sp" />
 
@@ -28,7 +30,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="227dp"
         android:layout_marginRight="227dp"
-        android:layout_marginBottom="508dp"
+        android:layout_marginBottom="546dp"
         android:hint="@string/TV_DateOfBirth"
         android:textSize="24sp" />
 
@@ -39,9 +41,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="225dp"
-        android:layout_marginRight="225dp"
-        android:layout_marginBottom="394dp"
+        android:layout_marginEnd="226dp"
+        android:layout_marginRight="226dp"
+        android:layout_marginBottom="396dp"
         android:hint="@string/TV_address"
         android:textSize="24sp" />
 
@@ -54,7 +56,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="209dp"
         android:layout_marginRight="209dp"
-        android:layout_marginBottom="297dp"
+        android:layout_marginBottom="283dp"
         android:hint="@string/TV_phoneNumber"
         android:textSize="24sp" />
 
@@ -67,7 +69,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="243dp"
         android:layout_marginRight="243dp"
-        android:layout_marginBottom="210dp"
+        android:layout_marginBottom="200dp"
         android:hint="@string/TV_Email"
         android:textSize="24sp" />
 
@@ -78,42 +80,45 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="288dp"
-        android:layout_marginRight="288dp"
-        android:layout_marginBottom="610dp"
+        android:layout_marginEnd="286dp"
+        android:layout_marginRight="286dp"
+        android:layout_marginBottom="653dp"
         android:hint="@string/TV_FirstN"
         android:textSize="24sp" />
 
     <android.support.design.widget.TextInputLayout
-        android:layout_width="178dp"
-        android:layout_height="36dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="129dp"
-        android:layout_marginEnd="58dp"
-        android:layout_marginRight="58dp">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/lastname"
-            android:layout_width="match_parent"
-            android:layout_height="29dp" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="381dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="222dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp">
+        android:layout_marginTop="69dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/lastname"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:inputType="text" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="387dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="190dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/birthdate"
             android:layout_width="match_parent"
-            android:layout_height="26dp" />
+            android:layout_height="37dp"
+            android:inputType="date"
+            android:maxLength="10" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -122,30 +127,32 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="440dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp">
+        android:layout_marginTop="446dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginRight="23dp">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/puhelinnumero"
-            android:layout_width="366dp"
-            android:layout_height="27dp" />
+            android:id="@+id/phonennumber"
+            android:layout_width="364dp"
+            android:layout_height="38dp"
+            android:inputType="phone" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:layout_width="383dp"
+        android:layout_width="382dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="531dp"
-        android:layout_marginEnd="19dp"
-        android:layout_marginRight="19dp">
+        android:layout_marginTop="536dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginRight="18dp">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/email"
-            android:layout_width="372dp"
-            android:layout_height="27dp" />
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:inputType="textEmailAddress" />
     </android.support.design.widget.TextInputLayout>
 
     <Spinner
@@ -155,9 +162,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="263dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginRight="34dp" />
+        android:layout_marginTop="256dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginRight="41dp"
+        android:entries="@array/country_arrays"
+        android:prompt="@string/country_prompt" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="140dp"
@@ -165,30 +174,32 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="132dp"
-        android:layout_marginEnd="261dp"
-        android:layout_marginRight="261dp">
+        android:layout_marginTop="79dp"
+        android:layout_marginEnd="259dp"
+        android:layout_marginRight="259dp">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/firstname"
             android:layout_width="match_parent"
-            android:layout_height="29dp" />
+            android:layout_height="40dp"
+            android:inputType="text" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:layout_width="337dp"
-        android:layout_height="43dp"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="344dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginRight="65dp">
+        android:layout_marginTop="346dp"
+        android:layout_marginEnd="73dp"
+        android:layout_marginRight="73dp">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/adress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="38dp"
+            android:inputType="textLongMessage" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
@@ -198,9 +209,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="592dp"
-        android:layout_marginEnd="260dp"
-        android:layout_marginRight="260dp"
+        android:layout_marginTop="621dp"
+        android:layout_marginEnd="264dp"
+        android:layout_marginRight="264dp"
         android:text="@string/BT_cancel" />
 
     <Button
@@ -210,9 +221,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="595dp"
-        android:layout_marginEnd="118dp"
-        android:layout_marginRight="118dp"
+        android:layout_marginTop="627dp"
+        android:layout_marginEnd="99dp"
+        android:layout_marginRight="99dp"
         android:text="@string/BT_cont" />
 
 </RelativeLayout>
