@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class TunnusLuonti extends Fragment {
@@ -21,11 +22,15 @@ public class TunnusLuonti extends Fragment {
     private EditText User, password, repassword;
     private String userName, passwords;
 
-    personalInfoUtility PUtility = personalInfoUtility.getInstance();
-
+    private StringUtility SUtil;
+    private personalInfoUtility PUtility;
+    private UserUtility UserU;
+    private SQLUtility sql;
 
     public TunnusLuonti() {
-        // Required empty public constructor
+        PUtility = personalInfoUtility.getInstance();
+        SUtil = StringUtility.getStringutility();
+        UserU = new UserUtility();
     }
 
 
@@ -38,6 +43,8 @@ public class TunnusLuonti extends Fragment {
         User = (EditText) UserInfoView.findViewById(R.id.userinput);
         password= (EditText) UserInfoView.findViewById(R.id.passwordInput);
         repassword = (EditText) UserInfoView.findViewById(R.id.repassword);
+
+        sql = new SQLUtility(this.getContext());
 
         buttonlisteners();
         return UserInfoView;
@@ -61,11 +68,15 @@ public class TunnusLuonti extends Fragment {
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  canSend=PersonUtil.checkInfo();
-                if (canSend==false){
-                    //TODO Toast method here here
+
+                if (userName==""){
+                    //TODO highlight function add
+                    Toast.makeText(getContext(), "Add username", Toast.LENGTH_LONG).show();
                     return;
-                }*/
+                }else if(password.getText().toString()==""){
+                    Toast.makeText(getContext(), "Add password", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 FisishUser();
             }
         });
@@ -76,22 +87,31 @@ public class TunnusLuonti extends Fragment {
             passwords=password.getText().toString();
         }else{
             //Todo show user that password is not the same, use also passwor utility to see if paswords is up to standards
+            //todo toast
+            //todo highlight
             return;
         }
-        if(PUtility.checkUser()==true){
+        //checks if username already exists
+        if(sql.checkIfExists(userName)==true){
             userName=User.getText().toString();
+        }else{
+            //todo tell user username already taken so a Toast and a highlight
+            return;
         }
-        PUtility.makeAUser(userName, passwords);
+
+        //makes user to comppletion
+        UserU.makeAUser(userName, passwords, sql);
         PUtility.emptylists();
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.detach(TunnusLuonti.this);
+        //todo figure out what the hell happende to the next 2 lines
         Fragment adInfo = manager.findFragmentByTag("addnfoView");
-        transaction.detach(adInfo);
+        //transaction.detach(adInfo);
         transaction.commit();
-
-        final MainActivity activity = (MainActivity)getActivity();
+        MainActivity activity = (MainActivity)getActivity();
         activity.cancleInfo();
+
     }
 
 

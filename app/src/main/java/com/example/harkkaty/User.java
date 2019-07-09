@@ -1,7 +1,9 @@
 package com.example.harkkaty;
 
+import java.util.ArrayList;
 import java.util.Date;
 
+//is used to hold the current user of the app and his info aswell as methods that allow updating the infromation and setting it
 public class User {
     private String name;
     private String email;
@@ -9,63 +11,102 @@ public class User {
     private String phoneNumberM;
     private String address;
     private int age;
-    private Date born;
+    private String birthDate;
+    private String userName;
+    private ArrayList<Account> accounts;
+    //info list that keeps users info in a list that can be used in other classes
+    private ArrayList<String> infoList;
+    private StringUtility  stringu;
+    private SQLUtility sql;
 
-    public User(){
+    private Account acc;
+    private User user = new User();
+
+    private User(){
         name="";
         email = "";
         userID = "";
         phoneNumberM = "";
         address = "";
-        age = 0;
-        born = null;
+        birthDate = "";
+        accounts = null;
+        userName="";
+        stringu = StringUtility.getStringutility();
+    }
 
+    //used when logging out
+    public void resetUser(){
+        name="";
+        email = "";
+        userID = "";
+        phoneNumberM = "";
+        address = "";
+        birthDate = "";
+        accounts = null;
+        userName="";
+        stringu = StringUtility.getStringutility();
+    }
+
+    public User getCurrentUser(){
+        return user;
     }
 
 
-    //TOdo finish making these and and userutilty methods and date methods related to these
-    public void setName(String firstname, String lastName){
-
-    }
-    public String getname(){
-        return name;
+    public ArrayList<String> getAllInfo(){
+        return infoList;
     }
 
-    public void setEmail(String firstname, String lastName){
+    public void updateUserInfo(ArrayList<String> newUserInfo, String id){
+        infoList = newUserInfo;
+        setCurrentUser();
+        sql.updateUserInfo(infoList.get(2),infoList.get(3),infoList.get(4),infoList.get(5), id);
 
     }
-    public String getEmail(){
-        return name;
-    }
 
-    public void setUserID(String firstname, String lastName){
+    //the order the info lists info is name(full), birthdate, country, address, email, phonenumber, username
+    public void setCurrentUser(){
+        name =infoList.get(0);
+        birthDate = infoList.get(1);
+        address = infoList.get(3)+ " "+ infoList.get(2);
+        email = infoList.get(4);
+        phoneNumberM = infoList.get(5);
+        userName=infoList.get(6);
 
-    }
-    public String getUserID(){
-        return name;
-    }
 
-    public void setAddress(String firstname, String lastName){
-
-    }
-    public String getAddress(){
-        return name;
-    }
-
-    public void setPhoneNumber(String firstname, String lastName){
 
     }
-    public String getPhoneNumber(){
-        return name;
+
+    //Todo make this method work so you will get current info here when you sign in
+    public void addCurrentUser(String id){
+        infoList=sql.getProfileInfo(id);
+        setCurrentUser();
+        setAccounts();
     }
 
-    //also sets person age, which uses DateC object to check the timi
-    public void setDateofBirth(Date birthdate){
-
-    }
-    public String getDateofBirth(){
-
-        return name;
+    //method to set userID
+    public void setUserID(String ID){
+        userID= ID;
     }
 
+    //method which gets all users account data from sqlFile and adds it to here, is run when new user is made
+    private void setAccounts(){
+        accounts = sql.getAccounts(userID);
+    }
+
+    public ArrayList<Account> getAccounts(){
+        return accounts;
+    }
+
+    public void addAccount(boolean savings, String balanceString){
+        String accountID =stringu.makeID(userID+ "account");
+        int proxy;
+        sql.addAccount(userID, accountID, savings, balanceString);
+        Account acc = new Account();
+        if(savings){
+            proxy = 1;
+        }else{
+            proxy = 0;
+        }
+        acc.setAccount(accountID, proxy, balanceString);
+    }
 }

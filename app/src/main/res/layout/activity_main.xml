@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/password"
+            android:id="@+id/passwordChange"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/TV_password"

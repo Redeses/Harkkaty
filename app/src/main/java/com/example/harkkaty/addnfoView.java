@@ -1,13 +1,10 @@
 package com.example.harkkaty;
 
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -64,7 +61,7 @@ public class addnfoView extends Fragment{
         address = (EditText) fragInfoView.findViewById(R.id.adress);
         birthDate = (EditText) fragInfoView.findViewById(R.id.birthdate);
 
-        countries = (Spinner) fragInfoView.findViewById(R.id.country);
+        countries = (Spinner) fragInfoView.findViewById(R.id.adress);
 
 
         buttonSetter();
@@ -102,6 +99,7 @@ public class addnfoView extends Fragment{
                 //a method which adds rest of the field to the infolist
                 PersonUtil.AddAllToList(firstNameProxy, lastNameProxy, phoneProxy, addressProxy);
                 canSend=PersonUtil.checkInfo();
+                //TODO remove the outcoded parts
                 if (canSend==false){
                     //TODO Toast method here here
                     //TODO make a method for telling which fields are not filled in
@@ -146,12 +144,17 @@ public class addnfoView extends Fragment{
             @Override
             //check if birthdate is at a point whre there is supposed to be a dot and adds it in
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-              /*  bDSChecker = birthDate.getText().toString().length();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                  bDSChecker = birthDate.getText().toString().length();
                 if (bDSChecker<compareInt){
                     isBackwards=true;
                 }else{
                     isBackwards=false;
-                }*///Todo finish making the date changer
+                }//Todo finish making the date changer
                 bDSChecker = birthDate.getText().toString().length();
                 System.out.println(bDSChecker+ " "+isBackwards);
 
@@ -165,14 +168,7 @@ public class addnfoView extends Fragment{
                     generalProxy = generalProxy+".";
                     birthDate.setText(generalProxy);
                     birthDate.setSelection(6);
-                }/*else if((birthDate.getText().toString().charAt(bDSChecker-1)=='.')){
-                    generalProxy.substring(0, generalProxy.length()-1);
-                    birthDate.setText(generalProxy);
-                }*/
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+                }
                 /*bDSChecker =birthDate.getText().toString().length();
                 if((bDSChecker == 3)&&(isBackwards==true)){
                     generalProxy=birthDate.getText().toString();
@@ -196,7 +192,6 @@ public class addnfoView extends Fragment{
                 }
 
                 birthDate.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
-
                 compareInt=bDSChecker;
             }
         });

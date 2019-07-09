@@ -19,7 +19,8 @@ public class personalInfoUtility {
     private static personalInfoUtility person = new personalInfoUtility();
 
     //bringing stringutility class usable here
-    StringUtility SUtil= StringUtility.getStringutility();
+    private StringUtility SUtil= StringUtility.getStringutility();
+    private SQL_Update sql;
 
     private personalInfoUtility(){
         setLists();
@@ -50,9 +51,6 @@ public class personalInfoUtility {
 
     //check if all the boxes have been filled AKA if readylist is all trues
     public boolean checkInfo(){
-
-        System.out.println(readyList.get(2)+" "+ allInfoList.get(2)); //todo remove check
-        System.out.println("alkaa tästä");//todo remove check
         for (int i=0; i<readyList.size()-1; i++){
 
             System.out.println(i+" "+readyList.get(i));//todo remove system print
@@ -80,10 +78,9 @@ public class personalInfoUtility {
     }
 
     //sends allinfoList to be made into a user class/xml-file  and also the username and password are passed to database
+    //is called from class TunnusLuonti and the method is forward clicklistener
     //TODO make it work with database and xml
-    public void makeAUser(String userN, String password){
 
-    }
 
     //empties both lists for next use
     public void emptylists(){
@@ -124,9 +121,9 @@ public class personalInfoUtility {
         }
     }
 
-    public boolean checkUser(){
-        boolean isnotuser=false;
-
-        return isnotuser;
+    public ArrayList<String> getAllInfoList(){
+        return allInfoList;
     }
+
+
 }
