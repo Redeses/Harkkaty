@@ -382,6 +382,11 @@ public class SQLUtility extends SQLiteOpenHelper {
 
     //method which changes the user password; used in password class
     public void updatePassword(String ID, String password){
-
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        String where= Table6_name+" = ?";
+        String [] proxy = new String[] {ID};
+        cv.put(LogInCol2, password);
+        db.update(Table2_name, cv, where, proxy);
     }
 }

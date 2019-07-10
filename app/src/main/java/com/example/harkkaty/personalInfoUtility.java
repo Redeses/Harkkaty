@@ -20,7 +20,7 @@ public class personalInfoUtility {
 
     //bringing stringutility class usable here
     private StringUtility SUtil= StringUtility.getStringutility();
-    private SQL_Update sql;
+    private SQLUtility sql;
 
     private personalInfoUtility(){
         setLists();
@@ -31,6 +31,7 @@ public class personalInfoUtility {
         for (int i=0; i<7; i++){
             allInfoList.add("");
             readyList.add(false);
+
         }
     }
 

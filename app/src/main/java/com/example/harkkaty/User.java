@@ -93,12 +93,17 @@ public class User {
         accounts = sql.getAccounts(userID);
     }
 
+    //used for making String[] array size
+    public int getAccountAmount(){
+        return accounts.size();
+    }
+
     public ArrayList<Account> getAccounts(){
         return accounts;
     }
 
     public void addAccount(boolean savings, String balanceString){
-        String accountID =stringu.makeID(userID+ "account");
+        String accountID =stringu.makeAccountID(userID, savings);
         int proxy;
         sql.addAccount(userID, accountID, savings, balanceString);
         Account acc = new Account();
@@ -108,5 +113,20 @@ public class User {
             proxy = 0;
         }
         acc.setAccount(accountID, proxy, balanceString);
+    }
+
+    //this methdo gets account based on teh spinner string sent here
+    public Account getSelectedAccount(String spinneString){
+        Account proxyAccount;
+        String id;
+        String[] str = spinneString.split("\n");
+        id = str[1];
+        for (int i = 0; i<accounts.size() ; i++){
+            proxyAccount=accounts.get(i);
+            if (proxyAccount.getAccountNumber().equals(spinneString)){
+                return proxyAccount;
+            }
+        }
+        return null;
     }
 }

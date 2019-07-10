@@ -24,7 +24,7 @@ public class password extends Fragment {
 
 
     public password() {
-
+        sql= sql.getSQLUtil(this.getContext());
     }
 
 
@@ -58,6 +58,8 @@ public class password extends Fragment {
             //todo toast here
             return;
         }
+        //updates the password in SQLutility class
+        sql.updatePassword(ID, newPassword.getText().toString());
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.detach(password.this);

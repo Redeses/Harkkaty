@@ -26,7 +26,21 @@
     <string name="TV_oldP">Old password</string>
     <string name="TV_newP">New password</string>
     <string name="TV_reNewP">New password again</string>
-    <string name="empty">Log In</string>
+    <string name="TV_accounts">Accounts</string>
+    <string name="TV_events">Events</string>
+    <string name="TV_BankCards">Bank Cards</string>
+    <string name="TV_payments">Payments</string>
+    <string name="TV_payment">Payment</string>
+    <string name="TV_more">More</string>
+    <string name="TV_oldPayments">Old Payments</string>
+    <string name="TV_newPayment">New Payment</string>
+    <string name="TV_addAccount">Add an Account</string>
+    <string name="EV_giveBalance">Give accounts balance</string>
+    <string name="CB_isSavings">Is Savingsaccount</string>
+    <string name="empty3">Log In</string>
+    <string name="empty2">Log In</string>
+    <string name="empty1">Log In</string>
+
 
 
     <string name="country_prompt">Choose country</string>
@@ -36,4 +50,7 @@
         <item>USA</item>
         <item>France</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

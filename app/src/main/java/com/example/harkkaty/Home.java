@@ -17,6 +17,7 @@ public class Home extends AppCompatActivity {
     private FrameLayout profileSettings;
     private Fragment fragment;
     private FragmentManager manager;
+    private SQLUtility sql;
 
     private User user;
 
@@ -27,10 +28,10 @@ public class Home extends AppCompatActivity {
         Intent getIntent = getIntent();
         //block where the userr who signed in is created to teh USer class
         userID = getIntent.getStringExtra("ID");
-        user=user.getCurrentUser();
         user.setUserID(userID);
         user.addCurrentUser(userID);
-
+        user=user.getCurrentUser();
+        sql=sql.getSQLUtil(this);
         profileSettings = findViewById(R.id.profileSettings);
         profileSettings.bringToFront();
         profileSettings.setVisibility(View.INVISIBLE);
@@ -63,6 +64,11 @@ public class Home extends AppCompatActivity {
 
     }
 
+    public void goAccount(View v){
+        Intent newIntent= new Intent(Home.this, AccountActivity.class);
+        this.finish();
+        Home.this.startActivity(newIntent);
+    }
 
-    //todo make functionality during onCreate to find all info connected to the user
+
 }

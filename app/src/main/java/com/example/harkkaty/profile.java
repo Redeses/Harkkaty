@@ -44,6 +44,7 @@ public class profile extends Fragment {
         phone = (TextView) viewFrag.findViewById(R.id.phoneI);
         email = (TextView) viewFrag.findViewById(R.id.emailI);
         username= (TextView) viewFrag.findViewById(R.id.userI);
+        sql=sql.getSQLUtil(this.getContext());
         getInfo();
         return viewFrag;
     }
