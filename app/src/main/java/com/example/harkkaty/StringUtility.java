@@ -1,12 +1,17 @@
 package com.example.harkkaty;
 
+import java.util.ArrayList;
+
 //a class for string manipulation
 public class StringUtility {
 
     private static StringUtility SUtil = new StringUtility();
     private String letters;
 
+    private DateC dateU;
+
     private StringUtility(){
+        dateU = dateU.getDatec();
         letters = "ABCDEFGHIJKLMNOPQRSTYVWXYZ";
     }
 
@@ -94,5 +99,18 @@ public class StringUtility {
         int size = userName.length();
         proxy =proxy+ " "+ makeFourDigitNumber()+ " "+ makeFourDigitNumber();
         return proxy;
+    }
+
+    //method used in accountActivity activity where the string this returns is used in recycleView
+    public String[] getFourEvents(ArrayList<AccountEvents> arrayAE){
+        String[] str4= new String[4];
+        String proxy;
+        AccountEvents proxyEvent;
+        for(int i= 0; i<4; i++){
+            proxyEvent = arrayAE.get(i);
+            proxy= proxyEvent.getReceivingAccount()+"   " + dateU.getSimpleDate(proxyEvent.getEventDate()) + "  "+ Double.toString(proxyEvent.getAmount());
+            str4[i] = proxy;
+        }
+        return str4;
     }
 }

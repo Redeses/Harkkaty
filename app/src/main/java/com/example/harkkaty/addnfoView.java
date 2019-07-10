@@ -1,6 +1,7 @@
 package com.example.harkkaty;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -99,7 +100,6 @@ public class addnfoView extends Fragment{
                 //a method which adds rest of the field to the infolist
                 PersonUtil.AddAllToList(firstNameProxy, lastNameProxy, phoneProxy, addressProxy);
                 canSend=PersonUtil.checkInfo();
-                //TODO remove the outcoded parts
                 if (canSend==false){
                     //TODO Toast method here here
                     //TODO make a method for telling which fields are not filled in
@@ -127,9 +127,11 @@ public class addnfoView extends Fragment{
                 boolean emailBool=PersonUtil.checkEmail(emailProxy);
                 if (emailBool==true){
                     PersonUtil.addToLists(emailProxy, 5);
+                    emailE.setTextColor(Color.GREEN);
                 }
                 else {
                     PersonUtil.removeFromLists(5);
+                    emailE.setTextColor(Color.BLACK);
                 }
 
             }
@@ -169,29 +171,17 @@ public class addnfoView extends Fragment{
                     birthDate.setText(generalProxy);
                     birthDate.setSelection(6);
                 }
-                /*bDSChecker =birthDate.getText().toString().length();
-                if((bDSChecker == 3)&&(isBackwards==true)){
-                    generalProxy=birthDate.getText().toString();
-                    generalProxy.substring(0, generalProxy.length()-1);
-                    birthDate.setText(generalProxy);
-                    birthDate.setSelection(2);
-                }else if ((bDSChecker == 6)&&(isBackwards==true)){
-                    generalProxy=birthDate.getText().toString();
-                    generalProxy.substring(0, generalProxy.length()-1);
-                    birthDate.setText(generalProxy);
-                    birthDate.setSelection(5);
-                }*///Todo finish making the date manipulator
-                //checks if the date of birth is filled in
+
                 generalProxy=birthDate.getText().toString();
                 if (bDSChecker == 10){
                     System.out.println("works"); //todo remove when used system print
                     PersonUtil.addToLists(generalProxy, 2);
+                    birthDate.setTextColor(Color.GREEN);
                 }else {
-                    System.out.println("DOES NOT works"); //todo remove when used system print
+                    birthDate.setTextColor(Color.BLACK);
                     PersonUtil.removeFromLists(2);
                 }
 
-                birthDate.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
                 compareInt=bDSChecker;
             }
         });
@@ -208,7 +198,7 @@ public class addnfoView extends Fragment{
 
             @Override
             public void afterTextChanged(Editable s) {
-                birthDate.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
+                phone.setTextColor(Color.BLACK);
             }
         });
 
@@ -225,7 +215,7 @@ public class addnfoView extends Fragment{
 
             @Override
             public void afterTextChanged(Editable s) {
-                firstName.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
+                firstName.setTextColor(Color.BLACK);
             }
         });
         lastName.addTextChangedListener(new TextWatcher() {
@@ -241,7 +231,7 @@ public class addnfoView extends Fragment{
 
             @Override
             public void afterTextChanged(Editable s) {
-                lastName.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
+                lastName.setTextColor(Color.BLACK);
             }
         });
         address.addTextChangedListener(new TextWatcher() {
@@ -257,7 +247,7 @@ public class addnfoView extends Fragment{
 
             @Override
             public void afterTextChanged(Editable s) {
-                address.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
+                address.setTextColor(Color.BLACK);
             }
         });
 
@@ -302,25 +292,25 @@ public class addnfoView extends Fragment{
     //sets the backGorund colour of the different textboxes to red depending on whether user has but info on them
     private void redColorSetter(){
         if (PersonUtil.returnBool(0)==false){
-            firstName.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.red, null));
+            firstName.setTextColor(Color.RED);
         }
         if (PersonUtil.returnBool(1)==false){
-            lastName.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.red, null));
+            lastName.setTextColor(Color.RED);
         }
         if (PersonUtil.returnBool(2)==false){
-            birthDate.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.red, null));
+            birthDate.setTextColor(Color.RED);
         }
         if (PersonUtil.returnBool(3)==false){
             countries.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.red, null));
         }
         if (PersonUtil.returnBool(4)==false){
-            address.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.red, null));
+            address.setTextColor(Color.RED);
         }
         if (PersonUtil.returnBool(5)==false){
-            phone.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.red, null));
+            phone.setTextColor(Color.RED);
         }
         if (PersonUtil.returnBool(6)==false){
-            emailE.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.red, null));
+            emailE.setTextColor(Color.RED);
         }
 
     }

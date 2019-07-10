@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,7 +28,9 @@ public class AccountActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter recycAdapter;
     private RecyclerView.LayoutManager recycManager;
-    private ArrayList events;
+    private ArrayList<AccountEvents> events;
+    private ArrayList<String> stringList;
+    private StringUtility StringU;
 
 
 
@@ -39,6 +42,12 @@ public class AccountActivity extends AppCompatActivity {
         user = user.getCurrentUser();
         accounts = findViewById(R.id.Accounts);
         makeAccountView = findViewById(R.id.newAccount);
+        StringU = StringUtility.getStringutility();
+
+        recyclerView = findViewById(R.id.AccountEvents);
+        recycManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(recycManager);
+
         makeSpinner();
     }
 
@@ -68,7 +77,9 @@ public class AccountActivity extends AppCompatActivity {
     //a method which trigger when spinner item is changed and open the old events
     private void setViewEvents(){
         events= account.setEvents();//TOdo make this work
-
+        String[] str = StringU.getFourEvents(events);
+        recycAdapter = new myAdapter(str);
+        recyclerView.setAdapter(recycAdapter);
     }
 
 
@@ -109,6 +120,9 @@ public class AccountActivity extends AppCompatActivity {
 
     //Home button which reStart home activity
     public void goHome(View v){
-
+        Intent newIntent= new Intent(AccountActivity.this, Home.class);
+        this.finish();
+        AccountActivity.this.startActivity(newIntent);
     }
+
 }

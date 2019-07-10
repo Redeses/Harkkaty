@@ -2,10 +2,11 @@ package com.example.harkkaty;
 
 import android.widget.ArrayAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Account {
+public class Account implements Serializable {
     private ArrayList<AccountEvents> event;
     private ArrayList<BankCard> cards;
     private Double currentBalance;
@@ -23,10 +24,15 @@ public class Account {
         cards=null;
     }
 
-    public void addEvent(Date time, String theOtherAccount, double amount){
+
+    //adds event to accounts to accounts events
+    public void addEvent(Date time, String theOtherAccount, double amount, String message, String entity){
         accEvent = new AccountEvents();
-        accEvent.AccountEvents(time, theOtherAccount, amount);
+        accEvent.AccountEvents(time, theOtherAccount, amount, message, entity);
         event.add(accEvent);
+        sql.addMoney(theOtherAccount);
+        //XML_Utility.addEvent();//Todo xml things
+
     }
 
     //gotten when user info is also aquired
@@ -61,7 +67,7 @@ public class Account {
     //todo make xml functionality
     public ArrayList<AccountEvents> setEvents(){
         ArrayList<AccountEvents> events=null;
-        //todo make this work
+        //todo make this work, aslo make sure they are from newest to oldest
         //events=XML_Utility.getEvents(ID);//should return a event list
         return events;
     }
@@ -78,6 +84,11 @@ public class Account {
 
     public double getBalance(){
         return currentBalance;
+    }
+
+    public void removeMoney(double money){
+        currentBalance=currentBalance-money;
+        sql.removeMoney(getAccountNumber());
     }
 
 

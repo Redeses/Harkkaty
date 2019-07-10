@@ -37,11 +37,17 @@
     <string name="TV_addAccount">Add an Account</string>
     <string name="EV_giveBalance">Give accounts balance</string>
     <string name="CB_isSavings">Is Savingsaccount</string>
-    <string name="empty3">Log In</string>
-    <string name="empty2">Log In</string>
-    <string name="empty1">Log In</string>
-
-
+    <string name="TV_accountSingle">Account</string>
+    <string name="TV_APayment">Make payment</string>
+    <string name="TV_cash">Record cash transaction</string>
+    <string name="TV_addMoney">Add money</string>
+    <string name="TV_amount">Amount</string>
+    <string name="TV_message">Message / reference</string>
+    <string name="TV_receiver">Receiver</string>
+    <string name="BT_makePayment">Make payment</string>
+    <string name="EMpty4">Record cash transaction</string>
+    <string name="EMpty3">Record cash transaction</string>
+    <string name="EMpty2">Record cash transaction</string>
 
     <string name="country_prompt">Choose country</string>
     <string-array name="country_arrays">

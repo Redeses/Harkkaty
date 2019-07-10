@@ -389,4 +389,14 @@ public class SQLUtility extends SQLiteOpenHelper {
         cv.put(LogInCol2, password);
         db.update(Table2_name, cv, where, proxy);
     }
+
+    //todo make happen cap'n
+    //the following methods are twins where one add the money to an account if its found the otehr one remove from account
+    public void addMoney(String accountID){
+
+    }
+
+    public void removeMoney(String AccountID){
+
+    }
 }
