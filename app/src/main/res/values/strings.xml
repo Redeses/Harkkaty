@@ -45,8 +45,8 @@
     <string name="TV_message">Message / reference</string>
     <string name="TV_receiver">Receiver</string>
     <string name="BT_makePayment">Make payment</string>
-    <string name="EMpty4">Record cash transaction</string>
-    <string name="EMpty3">Record cash transaction</string>
+    <string name="BT_addMney">Add money</string>
+    <string name="TV_setamount">Add money to account</string>
     <string name="EMpty2">Record cash transaction</string>
 
     <string name="country_prompt">Choose country</string>
@@ -66,4 +66,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_use_cards">UseCards</string>
 </resources>

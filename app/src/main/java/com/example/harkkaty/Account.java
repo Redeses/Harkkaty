@@ -32,7 +32,7 @@ public class Account implements Serializable {
         accEvent = new AccountEvents();
         accEvent.AccountEvents(time, theOtherAccount, amount, message, entity);
         event.add(accEvent);
-        sql.addMoney(theOtherAccount);
+        sql.addMoney(theOtherAccount, amount);
         xml.addEvent(time, theOtherAccount, amount, message, entity, ID);//Todo xml things
 
     }
@@ -88,9 +88,14 @@ public class Account implements Serializable {
         return currentBalance;
     }
 
+    public void addMoney(double added){
+        currentBalance=currentBalance+added;
+        sql.updateMoney(ID,Double.toString(currentBalance));
+    }
+
     public void removeMoney(double money){
         currentBalance=currentBalance-money;
-        sql.removeMoney(getAccountNumber());
+        sql.updateMoney(ID, Double.toString(currentBalance));
     }
 
     public int getCardSize(){

@@ -34,7 +34,7 @@ public class makeAccount extends Fragment {
         return makeAccountFrag;
     }
 
-    public void makeTheAccount(View view){
+    public void makeTheAccount(View v){
         boolean saving=false;
         if (savings.isChecked()){
             saving = true;

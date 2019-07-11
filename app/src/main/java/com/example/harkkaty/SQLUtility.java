@@ -222,6 +222,7 @@ public class SQLUtility extends SQLiteOpenHelper {
             contentValues.put(CustomerCol5, email);
             contentValues.put(CustomerCol7, phoneNumber);
             db.insert(Table2_name, null, contentValues);
+            db.close();
         }catch (Exception e){
 
         }
@@ -236,7 +237,9 @@ public class SQLUtility extends SQLiteOpenHelper {
             contentValues.put(AccountCol2, customerID);
             contentValues.put(AccountCol4, savings);
             contentValues.put(AccountCol3, balanceString);
+
             db.insert(Table2_name, null, contentValues);
+            db.close();
         }catch (Exception e){
 
         }
@@ -277,6 +280,8 @@ public class SQLUtility extends SQLiteOpenHelper {
                 accountsList.add(acc);
                 cursor.moveToNext();
             }
+            cursor.close();
+            db.close();
             return accountsList;
 
         }catch (Exception e){
@@ -311,6 +316,8 @@ public class SQLUtility extends SQLiteOpenHelper {
                 bankCardList.add(Bacc);
                 cursor.moveToNext();
             }
+            db.close();
+            cursor.close();
             return bankCardList;
 
         }catch (Exception e){
@@ -340,6 +347,8 @@ public class SQLUtility extends SQLiteOpenHelper {
            cursor = db.rawQuery("SELECT * FROM "+Table6_name+ " WHERE "+ LogInCol3 +"= "+ ID, null);
            proxy= cursor.getString(cursor.getColumnIndex(LogInCol1));
            info.set(6, proxy);
+           db.close();
+           cursor.close();
            return info;
        }catch (Exception e){
             return info;
@@ -358,7 +367,7 @@ public class SQLUtility extends SQLiteOpenHelper {
         cv.put(CustomerCol5, email);
         cv.put(CustomerCol7,  phoneN);
         db.update(Table2_name, cv, where, proxy);
-
+        db.close();
 
     }
 
@@ -374,6 +383,7 @@ public class SQLUtility extends SQLiteOpenHelper {
             }else{
                 isInData = true;
             }
+            db.close();
             return isInData;
         }catch (Exception e){
             return false;
@@ -388,15 +398,39 @@ public class SQLUtility extends SQLiteOpenHelper {
         String [] proxy = new String[] {ID};
         cv.put(LogInCol2, password);
         db.update(Table2_name, cv, where, proxy);
+        db.close();
     }
 
     //todo make happen cap'n
-    //the following methods are twins where one add the money to an account if its found the otehr one remove from account
-    public void addMoney(String accountID){
-
+    //this is used when crrent accounts money is manipulated
+    public void updateMoney(String accountID, String amount){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        String where= Table3_name+" = ?";
+        String [] proxy = new String[] {accountID};
+        cv.put(AccountCol3, amount);
+        db.update(Table2_name, cv, where, proxy);
+        db.close();
     }
 
-    public void removeMoney(String AccountID){
-
+//Cursor cursor = db.rawQuery("SELECT * FROM "+Table3_name+" WHERE "+AccountCol2+" = "+userID, null);
+    public void addMoney(String ID, double added){
+        Cursor cursor;
+        SQLiteDatabase db = this.getWritableDatabase();
+        cursor= db.rawQuery("Select * FROM "+ Table3_name+ " WHERE " + AccountCol1 +" = " + ID,null);
+        if(cursor.getCount()==0){
+            return;
+        }
+        String proxyS = cursor.getString(cursor.getColumnIndex(AccountCol3));
+        double proxyD = Double.parseDouble(proxyS);
+        proxyD=proxyD + added;
+        proxyS= Double.toString(proxyD);
+        ContentValues cv = new ContentValues();
+        String where= Table3_name+" = ?";
+        String [] proxy = new String[] {ID};
+        cv.put(AccountCol3, proxyS);
+        db.update(Table2_name, cv, where, proxy);
+        db.close();
     }
+
 }

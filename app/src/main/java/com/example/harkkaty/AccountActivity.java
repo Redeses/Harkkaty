@@ -32,6 +32,9 @@ public class AccountActivity extends AppCompatActivity {
     private ArrayList<String> stringList;
     private StringUtility StringU;
 
+    //position used when moving from activities to where the spinner position is important
+    private int position;
+
 
 
     @Override
@@ -65,6 +68,7 @@ public class AccountActivity extends AppCompatActivity {
                 proxy= accounts.getSelectedItem().toString();
                 account=user.getSelectedAccount(proxy);
                 setViewEvents();
+                position = accounts.getSelectedItemPosition();
             }
 
             @Override
@@ -110,12 +114,16 @@ public class AccountActivity extends AppCompatActivity {
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.detach(fragment);
             transaction.commit();
+            makeSpinner();
         }
     }
 
     //goes to bankCard activity but with current account shown first
     public void goToBankCards(View v){
-
+        Intent newIntent= new Intent(AccountActivity.this, userCards.class);
+        newIntent.putExtra("spinnerPosition", position);
+        this.finish();
+        AccountActivity.this.startActivity(newIntent);
     }
 
     //Home button which reStart home activity
