@@ -59,10 +59,10 @@ public class addnfoView extends Fragment{
         phone = (EditText) fragInfoView.findViewById(R.id.phonennumber);
         firstName = (EditText) fragInfoView.findViewById(R.id.firstname);
         lastName = (EditText) fragInfoView.findViewById(R.id.lastname);
-        address = (EditText) fragInfoView.findViewById(R.id.adress);
+        address = (EditText) fragInfoView.findViewById(R.id.address);
         birthDate = (EditText) fragInfoView.findViewById(R.id.birthdate);
 
-        countries = (Spinner) fragInfoView.findViewById(R.id.adress);
+        countries = (Spinner) fragInfoView.findViewById(R.id.country);
 
 
         buttonSetter();

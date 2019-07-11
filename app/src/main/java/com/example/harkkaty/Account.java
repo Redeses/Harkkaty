@@ -14,6 +14,7 @@ public class Account implements Serializable {
     private String ID;
     private AccountEvents accEvent;
     private SQLUtility sql;
+    private XML_Utility xml;
 
     public Account(){
         event=null;
@@ -22,6 +23,7 @@ public class Account implements Serializable {
         ID="";
         accEvent = null;
         cards=null;
+        xml = XML_Utility.getInstance();
     }
 
 
@@ -31,7 +33,7 @@ public class Account implements Serializable {
         accEvent.AccountEvents(time, theOtherAccount, amount, message, entity);
         event.add(accEvent);
         sql.addMoney(theOtherAccount);
-        //XML_Utility.addEvent();//Todo xml things
+        xml.addEvent(time, theOtherAccount, amount, message, entity);//Todo xml things
 
     }
 
@@ -68,7 +70,7 @@ public class Account implements Serializable {
     public ArrayList<AccountEvents> setEvents(){
         ArrayList<AccountEvents> events=null;
         //todo make this work, aslo make sure they are from newest to oldest
-        //events=XML_Utility.getEvents(ID);//should return a event list
+        events=xml.getEvents(ID);//should return a event list
         return events;
     }
 
@@ -89,6 +91,10 @@ public class Account implements Serializable {
     public void removeMoney(double money){
         currentBalance=currentBalance-money;
         sql.removeMoney(getAccountNumber());
+    }
+
+    public int getCardSize(){
+        return cards.size();
     }
 
 

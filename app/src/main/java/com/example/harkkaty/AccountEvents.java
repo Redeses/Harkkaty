@@ -2,6 +2,9 @@ package com.example.harkkaty;
 
 import java.util.Date;
 
+
+//class which holds event information
+//if the current account is receiving then receiving is you and message is type is incoming;
 public class AccountEvents {
     private Date eventDate;
     private String receivingAccount;

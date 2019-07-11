@@ -13,8 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 
-import java.util.List;
-
 public class AccountNewActivity extends AppCompatActivity {
     private Spinner accountSpinner;
     private FrameLayout frameLayout;
@@ -23,7 +21,9 @@ public class AccountNewActivity extends AppCompatActivity {
     private User user;
     private Account account;
     private ListUtility listU;
-    Intent intent;
+    //Intent intent;
+
+    private Bundle bundle;
 
     private String proxy;
 
@@ -47,7 +47,7 @@ public class AccountNewActivity extends AppCompatActivity {
         if(manager.getFragments().isEmpty()){
             frameLayout.setVisibility(View.VISIBLE);
             fragment = new payment();
-
+            setBundle();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.variableVIew, fragment);
             transaction.commit();
@@ -63,6 +63,7 @@ public class AccountNewActivity extends AppCompatActivity {
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.detach(fragment);
             fragment = new payment();
+            setBundle();
             transaction.replace(R.id.variableVIew, fragment);
             transaction.commit();
             fragmentKeepr=1;
@@ -75,6 +76,7 @@ public class AccountNewActivity extends AppCompatActivity {
             fragment = new Cash();
 
             FragmentTransaction transaction = manager.beginTransaction();
+            setBundle();
             transaction.replace(R.id.variableVIew, fragment);
             transaction.commit();
             fragmentKeepr=2;
@@ -91,6 +93,7 @@ public class AccountNewActivity extends AppCompatActivity {
             transaction.detach(fragment);
             fragment = new Cash();
             transaction.replace(R.id.variableVIew, fragment);
+            setBundle();
             transaction.commit();
             fragmentKeepr=1;
         }
@@ -102,6 +105,7 @@ public class AccountNewActivity extends AppCompatActivity {
             fragment = new AddMoney();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.variableVIew, fragment);
+            setBundle();
             transaction.commit();
             fragmentKeepr=3;
         }else if(fragmentKeepr==3){
@@ -116,16 +120,25 @@ public class AccountNewActivity extends AppCompatActivity {
             transaction.detach(fragment);
             fragment = new AddMoney();
             transaction.replace(R.id.variableVIew, fragment);
+            setBundle();
             transaction.commit();
             fragmentKeepr=3;
         }
     }
 
+    public void setBundle(){
+        fragment.setArguments(bundle);
+    }
+
     private void setSpinnet(){
         String[] str = new String[user.getAccountAmount()];
         //the proxy is used to find account selected
-
+        if (user.getAccountAmount()==0){
+            frameLayout.setVisibility(View.INVISIBLE);
+            return;
+        }
         str= listU.MakeAccountList(user.getAccountAmount());
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, str);
         accountSpinner.setSelection(0);
         proxy= accountSpinner.getSelectedItem().toString();
@@ -135,8 +148,17 @@ public class AccountNewActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 proxy= accountSpinner.getSelectedItem().toString();
                 account=user.getSelectedAccount(proxy);
-                intent=new Intent();
-                intent.putExtra("accountID", account);
+                //intent=new Intent();
+                //intent.putExtra("accountID", account);
+                bundle = new Bundle();
+                bundle.putSerializable("account", account);
+                if (fragmentKeepr ==1){
+                    ((payment) fragment).setAcc(account);
+                }else if (fragmentKeepr==2){
+                    ((Cash) fragment).setAcc(account);
+                }else if (fragmentKeepr==3){
+                    ((AddMoney) fragment).setAcc(account);
+                }
 
             }
 

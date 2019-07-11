@@ -13,6 +13,7 @@ import android.view.ViewGroup;
  */
 public class AddMoney extends Fragment {
 
+    private Account acc;
 
     public AddMoney() {
         // Required empty public constructor
@@ -23,7 +24,14 @@ public class AddMoney extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_money, container, false);
+        View cashFragView =inflater.inflate(R.layout.fragment_add_money, container, false);
+        acc= (Account) getArguments().getSerializable("account");
+        return cashFragView;
+    }
+
+    //used to set account from activitys spinner and resett the spinner
+    public void setAcc(Account account){
+        acc=account;
     }
 
 }

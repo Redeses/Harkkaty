@@ -113,4 +113,11 @@ public class StringUtility {
         }
         return str4;
     }
+
+
+    //gets card as a value and return it as a usable in spinner string. Return to listUtility
+    public String cardToString(BankCard card){
+        String proxy= card.getNumber()+ "   "+ card.getType();
+        return proxy;
+    }
 }

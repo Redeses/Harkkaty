@@ -44,7 +44,7 @@ public class payment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View paymentFragView=inflater.inflate(R.layout.fragment_payment, container, false);
-        AccountID = (Account) intent.getSerializableExtra("accountID");
+        AccountID = (Account) getArguments().getSerializable("account");
         toAccount = paymentFragView.findViewById(R.id.paymentAccount);
         receiver = paymentFragView.findViewById(R.id.paymentReceiver);
         amount = paymentFragView.findViewById(R.id.paymentAmount);
@@ -54,9 +54,14 @@ public class payment extends Fragment {
         return paymentFragView;
     }
 
+    //used to set account from activitys spinner and resett the spinner
+    public void setAcc(Account account) {
+        AccountID= account;
+    }
+
     //method taht checks if all relevant fields are filled and makes event log of it
     ///also updates the account that the money is sent to with the currency/if it exists
-    public void makePayment(){
+    public void makePayment(View v){
         String proyx=amount.getText().toString();
         if (proyx==""){
 

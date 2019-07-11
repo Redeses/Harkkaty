@@ -8,6 +8,7 @@ public class ListUtility {
 
     private StringUtility StringU;
     private ArrayList<Account> AccountProxy;
+    private ArrayList<BankCard> cardProxy;
 
     private ListUtility(){
         user=user.getCurrentUser();
@@ -25,6 +26,15 @@ public class ListUtility {
         AccountProxy = user.getAccounts();
         for (int i=0; i<size; i++){
             str[i] = StringU.makeAccountToString(AccountProxy.get(i));
+        }
+        return str;
+    }
+
+    public String[] MakeCardList(Account account){
+        String[] str = new String[account.getCardSize()];
+        cardProxy = account.getCards();
+        for (int i=0; i<account.getCardSize(); i++){
+            str[i] = StringU.cardToString(cardProxy.get(i));
         }
         return str;
     }

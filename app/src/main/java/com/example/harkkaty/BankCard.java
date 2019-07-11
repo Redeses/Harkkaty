@@ -23,6 +23,19 @@ public class BankCard {
 
 
     public void setBankCard(String cardN, String type, int onlineLimit, int cashLimit, int checkingLimit, int credit){
+        cardNumber=cardN;
+        this.type=type;
+        this.onlineLimit=onlineLimit;
+        this.cashLimit = cashLimit;
+        this.checkingLimit = checkingLimit;
+        this.credit = credit;
+    }
 
+    public String getNumber(){
+        return cardNumber;
+    }
+
+    public String getType(){
+        return type;
     }
 }
