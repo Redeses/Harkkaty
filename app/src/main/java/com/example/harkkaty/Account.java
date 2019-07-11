@@ -33,7 +33,7 @@ public class Account implements Serializable {
         accEvent.AccountEvents(time, theOtherAccount, amount, message, entity);
         event.add(accEvent);
         sql.addMoney(theOtherAccount);
-        xml.addEvent(time, theOtherAccount, amount, message, entity);//Todo xml things
+        xml.addEvent(time, theOtherAccount, amount, message, entity, ID);//Todo xml things
 
     }
 
