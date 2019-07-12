@@ -47,7 +47,20 @@
     <string name="BT_makePayment">Make payment</string>
     <string name="BT_addMney">Add money</string>
     <string name="TV_setamount">Add money to account</string>
-    <string name="EMpty2">Record cash transaction</string>
+    <string name="TV_card">Card</string>
+    <string name="TV_chekcingLimit">Checking Limit</string>
+    <string name="TV_cashLimit">Cash Limit</string>
+    <string name="TV_webLimit">Web purchase limit</string>
+    <string name="BT_delete">Delete Card</string>
+    <string name="BT_customize">Customize Limits</string>
+    <string name="empty25">Receiver</string>
+    <string name="empty24">Receiver</string>
+    <string name="empty23">Receiver</string>
+    <string name="empty22">Receiver</string>
+    <string name="empty21">Receiver</string>
+
+
+
 
     <string name="country_prompt">Choose country</string>
     <string-array name="country_arrays">

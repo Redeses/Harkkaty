@@ -253,7 +253,9 @@ public class SQLUtility extends SQLiteOpenHelper {
 
     }
 
-    public void updateBankCard(){
+
+    //todo next here
+    public void updateLimits(){
 
     }
 

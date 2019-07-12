@@ -114,10 +114,31 @@ public class StringUtility {
         return str4;
     }
 
+    //method used for getting cards from account
+    public String[] getCards(ArrayList<BankCard> arrayCards){
+        String[] str = new String[arrayCards.size()];
+        String proxy;
+        BankCard proxyCard;
+        for(int i= 0; i<arrayCards.size(); i++){
+            proxyCard = arrayCards.get(i);
+            proxy = proxyCard.getNumber() +"    "+ proxyCard.getType();
+            str[i] = proxy;
+        }
+        return str;
+    }
+
 
     //gets card as a value and return it as a usable in spinner string. Return to listUtility
     public String cardToString(BankCard card){
         String proxy= card.getNumber()+ "   "+ card.getType();
+        return proxy;
+    }
+
+    //gets a string in teh form of "cardnumber      type" and returs just the card number
+    public String getCardNumber(String cardString){
+        String proxy;
+        String[] proxyList = cardString.split(" ");
+        proxy = proxyList[0];
         return proxy;
     }
 }

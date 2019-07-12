@@ -74,6 +74,11 @@ public class Account implements Serializable {
         return events;
     }
 
+    //todo ????
+    /*public ArrayList<BankCard> setCardsRecyc(){
+
+    }*/
+
     //returns accoubt events
     public AccountEvents getEvents(){
         return accEvent;
@@ -102,5 +107,21 @@ public class Account implements Serializable {
         return cards.size();
     }
 
+    public BankCard getACard(String number){
+        BankCard proxy;
+        for (int i=0; i<cards.size(); i++){
+            proxy = cards.get(i);
+            if(number ==proxy.getNumber()){
+                return proxy;
+            }
+        }
+        return null;
+
+    }
+
+    //todo make a thng that removes a certain object from a arraylist
+    public void removerCard(BankCard card){
+        cards.remove(card);
+    }
 
 }

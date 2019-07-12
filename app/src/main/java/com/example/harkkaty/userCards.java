@@ -1,5 +1,6 @@
 package com.example.harkkaty;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,9 @@ public class userCards extends AppCompatActivity {
     private RecyclerView.LayoutManager recycManager;
     private Account account;
     private int position;
+    private ArrayList<BankCard> bankCardList;
+    private StringUtility StringU;
+    private int type;
 
 
     @Override
@@ -30,6 +34,7 @@ public class userCards extends AppCompatActivity {
         listU= listU.getListUtility();
         accounts= findViewById(R.id.accountSpinner);
         position=getIntent().getIntExtra("spinnePosition", 0);
+        StringU = StringUtility.getStringutility();
 
         makeSpinner();
 
@@ -49,7 +54,7 @@ public class userCards extends AppCompatActivity {
                 String proxy;
                 proxy= accounts.getSelectedItem().toString();
                 account=user.getSelectedAccount(proxy);
-                //setViewCards();
+                setViewCards();
             }
 
             @Override
@@ -60,11 +65,24 @@ public class userCards extends AppCompatActivity {
     }
 
 
-   /* // todo method which the recyclerView for cards
+    // todo method which the recyclerView for cards
     private void setViewCards(){
-        events= account.setEvents();//TOdo make this work
-        String[] str = StringU.getFourEvents(events);
+        bankCardList= account.getCards();//TOdo make this work
+        String[] str = StringU.getCards(bankCardList);
         recycAdapter = new myAdapter(str);
+        type = 2;
+        ((myAdapter) recycAdapter).setType(type);
+        ((myAdapter) recycAdapter).setContext(this);
         recyclerView.setAdapter(recycAdapter);
-    }*/
+    }
+
+    // moves to Card info activity
+    public void ToCards(String cardnumber){
+        Intent newIntent= new Intent(userCards.this, CardInfo.class);
+        cardnumber= StringU.getCardNumber(cardnumber);
+        BankCard proxyCard= account.getACard(cardnumber);
+        newIntent.putExtra("BankCard", proxyCard);
+        this.finish();
+        userCards.this.startActivity(newIntent);
+    }
 }

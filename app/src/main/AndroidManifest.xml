@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".userCards"></activity>
+        <activity android:name=".CardInfo"></activity>
+        <activity android:name=".userCards" />
         <activity
             android:name=".UseCards"
             android:label="@string/title_activity_use_cards"

@@ -1,7 +1,9 @@
 package com.example.harkkaty;
 
+import java.io.Serializable;
+
 //class which has bankCards non important info on it
-public class BankCard {
+public class BankCard implements Serializable {
 
     private String cardNumber;
     //type is either credit, debit or credit&debit
@@ -11,6 +13,8 @@ public class BankCard {
     private int cashLimit;
     private int checkingLimit;
     private int credit;
+
+    private SQLUtility sql;
 
     public BankCard(){
         cardNumber="default";
@@ -38,4 +42,23 @@ public class BankCard {
     public String getType(){
         return type;
     }
+
+    //get methods for limits
+    public int getOnlineLimit (){return onlineLimit;}
+    public int getCashLimit (){return cashLimit;}
+    public int getCheckingLimit (){return checkingLimit;}
+    public int getCredit (){return credit;}
+
+    //set methods for limits
+    public void setOnlineLimit(int i){onlineLimit =i;}
+    public void setCashLimit(int i){cashLimit = i;}
+    public  void setCheckingLimit(int i){checkingLimit =i;}
+    public void setCredit(int i){credit = i;}
+
+
+    //next method is used to update sql database with the limits
+    public void updateSQL(){
+        sql.updateLimits();
+    }
+
 }

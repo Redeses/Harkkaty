@@ -82,7 +82,9 @@ public class AccountActivity extends AppCompatActivity {
     private void setViewEvents(){
         events= account.setEvents();//TOdo make this work
         String[] str = StringU.getFourEvents(events);
+
         recycAdapter = new myAdapter(str);
+        ((myAdapter) recycAdapter).setType(1);
         recyclerView.setAdapter(recycAdapter);
     }
 
