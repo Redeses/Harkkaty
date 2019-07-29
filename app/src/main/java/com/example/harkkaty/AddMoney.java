@@ -34,7 +34,9 @@ public class AddMoney extends Fragment {
         acc=account;
     }
 
-    public void addTheMoney(){
+
+    //adds money to the account
+    public void addTheMoney(View v){
         String proxy = moneyAmount.getText().toString();
         if (proxy==""){
             //todo toast text here

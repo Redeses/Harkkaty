@@ -54,5 +54,6 @@
         android:layout_marginTop="342dp"
         android:layout_marginEnd="167dp"
         android:layout_marginRight="167dp"
+        android:onClick="makePayment"
         android:text="Button" />
 </RelativeLayout>

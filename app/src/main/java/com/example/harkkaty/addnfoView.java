@@ -34,7 +34,6 @@ public class addnfoView extends Fragment{
     public Button bacc, forward;
     public Fragment fragFrag;
 
-
     private personalInfoUtility PersonUtil = personalInfoUtility.getInstance();
 
 
@@ -62,7 +61,7 @@ public class addnfoView extends Fragment{
         address = (EditText) fragInfoView.findViewById(R.id.address);
         birthDate = (EditText) fragInfoView.findViewById(R.id.birthdate);
 
-        countries = (Spinner) fragInfoView.findViewById(R.id.country);
+        countries = (Spinner) fragInfoView.findViewById(R.id.addressI);
 
 
         buttonSetter();
@@ -86,7 +85,6 @@ public class addnfoView extends Fragment{
                 transaction.commit();
                // canceL();
                 activity.cancleInfo();
-                System.out.println("LOL");
             }
         });
 
@@ -158,7 +156,6 @@ public class addnfoView extends Fragment{
                     isBackwards=false;
                 }//Todo finish making the date changer
                 bDSChecker = birthDate.getText().toString().length();
-                System.out.println(bDSChecker+ " "+isBackwards);
 
                 if ((bDSChecker ==2)&&(isBackwards==false)){
                     generalProxy=birthDate.getText().toString();
@@ -174,7 +171,6 @@ public class addnfoView extends Fragment{
 
                 generalProxy=birthDate.getText().toString();
                 if (bDSChecker == 10){
-                    System.out.println("works"); //todo remove when used system print
                     PersonUtil.addToLists(generalProxy, 2);
                     birthDate.setTextColor(Color.GREEN);
                 }else {

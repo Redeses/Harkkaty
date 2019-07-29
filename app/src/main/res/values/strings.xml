@@ -53,13 +53,11 @@
     <string name="TV_webLimit">Web purchase limit</string>
     <string name="BT_delete">Delete Card</string>
     <string name="BT_customize">Customize Limits</string>
-    <string name="empty25">Receiver</string>
-    <string name="empty24">Receiver</string>
+    <string name="TV_credit">Credit</string>
+    <string name="TV_makeCard">Make a Card</string>
     <string name="empty23">Receiver</string>
     <string name="empty22">Receiver</string>
     <string name="empty21">Receiver</string>
-
-
 
 
     <string name="country_prompt">Choose country</string>
@@ -76,6 +74,14 @@
         <item>Online</item>
         <item>Check</item>
     </string-array>
+
+    <string name="Card_type">Choose type</string>
+    <string-array name="actual_card_type">
+        <item>Debit</item>
+        <item>Credit</item>
+        <item>Credit/Debit</item>
+    </string-array>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

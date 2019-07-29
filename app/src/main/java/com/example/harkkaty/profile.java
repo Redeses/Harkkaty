@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,7 +29,8 @@ public class profile extends Fragment {
 
     private SQLUtility sql;
     private Fragment infoFrag;
-
+    private String countryProxy;
+    private Spinner countries;
 
     public profile() {
         // Required empty public constructor
@@ -45,6 +48,7 @@ public class profile extends Fragment {
         email = (TextView) viewFrag.findViewById(R.id.emailI);
         username= (TextView) viewFrag.findViewById(R.id.userI);
         sql=sql.getSQLUtil(this.getContext());
+        us = User.getCurrentUser();
         getInfo();
         return viewFrag;
     }
@@ -67,10 +71,14 @@ public class profile extends Fragment {
         allnfolist=us.getAllInfo();
         name.setText(allnfolist.get(0));
         birthdate.setText(allnfolist.get(1));
-        address.setText(allnfolist.get(3)+" "+ allnfolist.get(2));
+        String proxy;
+        proxy =allnfolist.get(3)+ " "+ allnfolist.get(2);
+        address.setText(proxy);
         email.setText(allnfolist.get(4));
         phone.setText(allnfolist.get(5));
+
     }
+
 
     public void changePassword(View view){
         FragmentManager fragManager = getFragmentManager();

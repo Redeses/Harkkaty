@@ -12,9 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class makeAccount extends Fragment {
     private EditText balance;
     private CheckBox savings;

@@ -15,6 +15,7 @@
         android:layout_marginTop="265dp"
         android:layout_marginEnd="153dp"
         android:layout_marginRight="153dp"
+        android:onClick="addTheMoney"
         android:text="@string/TV_addMoney" />
 
     <TextView

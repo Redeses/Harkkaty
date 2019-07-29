@@ -19,11 +19,12 @@ public class personalInfoUtility {
     private static personalInfoUtility person = new personalInfoUtility();
 
     //bringing stringutility class usable here
-    private StringUtility SUtil= StringUtility.getStringutility();
+    private StringUtility SUtil = StringUtility.getInstance();
     private SQLUtility sql;
 
     private personalInfoUtility(){
         setLists();
+
     }
 
     // method which resets the lists also use during construction
@@ -67,8 +68,6 @@ public class personalInfoUtility {
     public void addToLists(String info, int position){
         readyList.set(position, true);
         allInfoList.set(position, info);
-        System.out.println("added"); //todo remove system print
-        System.out.println(readyList.get(2)+" "+ allInfoList.get(2));
     }
 
     //removes certain position info from lists
@@ -113,13 +112,14 @@ public class personalInfoUtility {
         if (phone.equals("")){
 
         }else{
-            addToLists(fName, 4);
+            addToLists(phone, 6);
         }
         if (address.equals("")){
 
         }else{
-            addToLists(fName, 6);
+            addToLists(address, 4);
         }
+
     }
 
     public ArrayList<String> getAllInfoList(){

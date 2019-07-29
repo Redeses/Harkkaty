@@ -5,17 +5,18 @@ import java.util.ArrayList;
 //a class for string manipulation
 public class StringUtility {
 
-    private static StringUtility SUtil = new StringUtility();
     private String letters;
 
-    private DateC dateU;
+    private DateC dateU= DateC.getDatec();
 
+    private static StringUtility SUtil = new StringUtility();
     private StringUtility(){
+
         dateU = dateU.getDatec();
         letters = "ABCDEFGHIJKLMNOPQRSTYVWXYZ";
     }
 
-    public static StringUtility getStringutility(){
+    public static StringUtility getInstance(){
         return SUtil;
     }
 
@@ -114,7 +115,7 @@ public class StringUtility {
         return str4;
     }
 
-    //method used for getting cards from account
+    //method used for getting cards from account into a string list
     public String[] getCards(ArrayList<BankCard> arrayCards){
         String[] str = new String[arrayCards.size()];
         String proxy;
@@ -139,6 +140,31 @@ public class StringUtility {
         String proxy;
         String[] proxyList = cardString.split(" ");
         proxy = proxyList[0];
+        return proxy;
+    }
+
+    //method for making a card number
+    public String makeACardNumber(String type){
+        String proxy="";
+        if (type.equals("credit")){
+            proxy=proxy+"1492";
+        }else if(type.equals("debit")){
+            proxy=proxy+"2992";
+        }else if (type.equals("credit&debit")){
+            proxy=proxy+"3284";
+        }else{
+            proxy=proxy+"5555";
+        }
+        proxy=makeFourDigitNumber()+makeFourDigitNumber()+makeFourDigitNumber();
+        return proxy;
+    }
+
+    //method for making verification number
+    public String makeVerification(String cardString){
+        String proxy="";
+        int IntProxy;
+        proxy=makeFourDigitNumber();
+        proxy=proxy.substring(0, proxy.length()-1);
         return proxy;
     }
 }

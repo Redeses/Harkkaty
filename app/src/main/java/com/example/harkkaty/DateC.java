@@ -7,13 +7,13 @@ import java.util.Date;
 
 public class DateC {
     private Date date;
-    private DateC datec = new DateC();
+    private static DateC datec = new DateC();
 
     private DateC(){
 
     }
 
-    public DateC getDatec(){
+    public static DateC getDatec(){
         return datec;
     }
 
@@ -26,6 +26,7 @@ public class DateC {
 
 
     //todo make to work
+    //returns a day.month.year String of the given date
     public String getSimpleDate(Date theDate){
         String simpleDate="";
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");

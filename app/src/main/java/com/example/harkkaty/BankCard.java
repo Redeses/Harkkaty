@@ -13,8 +13,10 @@ public class BankCard implements Serializable {
     private int cashLimit;
     private int checkingLimit;
     private int credit;
+    private String account;
 
     private SQLUtility sql;
+    private StringUtility stringU;
 
     public BankCard(){
         cardNumber="default";
@@ -23,9 +25,11 @@ public class BankCard implements Serializable {
         cashLimit=-1;
         checkingLimit=-1;
         credit =0;//no credit
+        account = "";
     }
 
 
+    //sets the current instance of the bankcard
     public void setBankCard(String cardN, String type, int onlineLimit, int cashLimit, int checkingLimit, int credit){
         cardNumber=cardN;
         this.type=type;
@@ -33,6 +37,7 @@ public class BankCard implements Serializable {
         this.cashLimit = cashLimit;
         this.checkingLimit = checkingLimit;
         this.credit = credit;
+        sql.addBankcard(this, "0000", stringU.makeVerification(cardN));
     }
 
     public String getNumber(){
@@ -58,7 +63,18 @@ public class BankCard implements Serializable {
 
     //next method is used to update sql database with the limits
     public void updateSQL(){
-        sql.updateLimits();
+        sql.updateLimits(this);
+    }
+
+    //method for setting getting account
+    public String getAccount(){return account;}
+    public void setAccount(String accountID){account=accountID;}
+
+    public String getCardType(){
+        return type;
+    }
+    public void setCardType(String newType){
+        type=newType;
     }
 
 }

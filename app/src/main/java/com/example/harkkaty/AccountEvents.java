@@ -9,7 +9,10 @@ public class AccountEvents {
     private Date eventDate;
     private String receivingAccount;
     private double amount;
-    private String message, Entity;
+    private String accountID, message, Entity, eventID;
+
+    private StringUtility stringU;
+    private DateC datec;
 
     public AccountEvents(){
         eventDate=null;
@@ -17,14 +20,19 @@ public class AccountEvents {
         amount = 0.0;
         message="";
         Entity="";
+        eventID="";
+        accountID="";
     }
 
-    public void AccountEvents(Date date, String Raccount, double Amount, String message, String entity){
+    //set accont event
+    public void AccountEvents(Date date, String Raccount, double Amount, String message, String entity, String id){
         eventDate= date;
         receivingAccount=Raccount;
         amount=Amount;
         this.message = message;
         Entity=entity;
+        eventID=stringU.makeACardNumber(Raccount);
+        accountID =id;
 
     }
 
@@ -33,6 +41,7 @@ public class AccountEvents {
     }
 
     public Date getEventDate(){return eventDate;}
+    public String getDateString(){return datec.getSimpleDate(eventDate);}
 
     public String getReceivingAccount(){
         return receivingAccount;
@@ -43,4 +52,7 @@ public class AccountEvents {
     public String getmessage(){
         return message;
     }
+    public String getEntity(){return Entity;}
+    public String getID(){return eventID;}
+    public String getAccountID(){return accountID;}
 }

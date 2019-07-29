@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected Fragment fragment;
     private addnfoView infoView;
     private SQLUtility sql;
+    private StringUtility stringU;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +35,11 @@ public class MainActivity extends AppCompatActivity {
         newUse = findViewById(R.id.newUser);
         newUse.bringToFront();
         newUse.setVisibility(View.INVISIBLE);
-        sql = sql.getSQLUtil(this);
+        sql= SQLUtility.getSQLUtil(this);
+        sql = sql.getSQLUtil(MainActivity.this);
         newUse.setBackgroundColor(getResources().getColor(R.color.white));
 
     }
-
-
-
 
 
     public void logIn(View v){
@@ -50,14 +49,19 @@ public class MainActivity extends AppCompatActivity {
         Boolean isUser;
 
         User = sql.logInCheck(username,password);
+        if (User==null){
+            return;
+        }
         if(User.getCount()==0){
             //todo toast tähän
             return;
         }
         User.moveToFirst();
         String passwordProxy=User.getString(User.getColumnIndex(SQLUtility.LogInCol2));
+
         if(passwordProxy.equals(password)){
             ID = User.getString(User.getColumnIndex(SQLUtility.LogInCol3));
+            System.out.println(passwordProxy + ID);
             switchToMainUserView();
         }
 

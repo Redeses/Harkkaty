@@ -53,6 +53,7 @@ public class Cash extends Fragment {
         setAccountSpinner();
     }
 
+    //sets the spinners when the fragment is created
     public void setSpinners() {
         type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -67,6 +68,8 @@ public class Cash extends Fragment {
         });
     }
 
+
+    //sets the account spinner at the beginning of the run
      public void setAccountSpinner(){
         if (proxyAccount.getCardSize()==0){
             makePayment.setVisibility(View.INVISIBLE);

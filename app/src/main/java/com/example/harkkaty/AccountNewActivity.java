@@ -43,6 +43,8 @@ public class AccountNewActivity extends AppCompatActivity {
         setSpinnet();
     }
 
+    //add a fragment int the framelayout. the fragment is closed by pressing the same button.
+    //the fragment started is the payment fragment where user can make payments to accounts
     public void startPaymentFragment(View v){
         if(manager.getFragments().isEmpty()){
             frameLayout.setVisibility(View.VISIBLE);
@@ -70,6 +72,8 @@ public class AccountNewActivity extends AppCompatActivity {
         }
     }
 
+    //add a fragment int the framelayout. the fragment is closed by pressing the same button
+    //starts cash fragment where user can take cash out from a virtual atm with a bank card
     public void startCashFragment(View v){
         if(manager.getFragments().isEmpty()){
             frameLayout.setVisibility(View.VISIBLE);
@@ -99,6 +103,8 @@ public class AccountNewActivity extends AppCompatActivity {
         }
     }
 
+    //add a fragment int the framelayout. the fragment is closed by pressing the same button
+    // begins AddMoney fragment where there can be added money to the account given
     public void startAddMoneyFragment(View v){
         if(manager.getFragments().isEmpty()){
             frameLayout.setVisibility(View.VISIBLE);
@@ -126,10 +132,13 @@ public class AccountNewActivity extends AppCompatActivity {
         }
     }
 
+    //just gets bundle arguments to be used in the fragments
     public void setBundle(){
         fragment.setArguments(bundle);
     }
 
+
+    //sets spinner that are used in the fragments and their method
     private void setSpinnet(){
         String[] str = new String[user.getAccountAmount()];
         //the proxy is used to find account selected
@@ -150,6 +159,7 @@ public class AccountNewActivity extends AppCompatActivity {
                 account=user.getSelectedAccount(proxy);
                 //intent=new Intent();
                 //intent.putExtra("accountID", account);
+
                 bundle = new Bundle();
                 bundle.putSerializable("account", account);
                 if (fragmentKeepr ==1){
@@ -169,12 +179,15 @@ public class AccountNewActivity extends AppCompatActivity {
         });
     }
 
+    //returns to Accountactivity
     public void goBack(View v){
         Intent newIntent= new Intent(AccountNewActivity.this, AccountActivity.class);
         this.finish();
         AccountNewActivity.this.startActivity(newIntent);
     }
 
+
+    //goes to Home activity
     public void goHome(View v){
         Intent newIntent= new Intent(AccountNewActivity.this, Home.class);
         this.finish();

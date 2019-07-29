@@ -1,5 +1,8 @@
 package com.example.harkkaty;
 
+import android.app.Activity;
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -20,7 +23,7 @@ public class User {
     private SQLUtility sql;
 
     private Account acc;
-    private User user = new User();
+    private static User user = new User();
 
     private User(){
         name="";
@@ -31,7 +34,8 @@ public class User {
         birthDate = "";
         accounts = null;
         userName="";
-        stringu = StringUtility.getStringutility();
+        stringu = StringUtility.getInstance();
+        sql = SQLUtility.getSQLUtil(null);
     }
 
     //used when logging out
@@ -44,10 +48,10 @@ public class User {
         birthDate = "";
         accounts = null;
         userName="";
-        stringu = StringUtility.getStringutility();
+        stringu = StringUtility.getInstance();
     }
 
-    public User getCurrentUser(){
+    public static User getCurrentUser(){
         return user;
     }
 
@@ -79,6 +83,7 @@ public class User {
     //Todo make this method work so you will get current info here when you sign in
     public void addCurrentUser(String id){
         infoList=sql.getProfileInfo(id);
+        System.out.println(infoList+ "<--hereee");//todo remove
         setCurrentUser();
         setAccounts();
     }
@@ -95,6 +100,9 @@ public class User {
 
     //used for making String[] array size
     public int getAccountAmount(){
+        if (accounts ==null){
+            return 0;
+        }
         return accounts.size();
     }
 

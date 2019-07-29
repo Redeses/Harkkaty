@@ -11,7 +11,7 @@ import android.support.v7.app.ActionBar;
 import java.util.ArrayList;
 
 public class SQLUtility extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME ="Bank.db";
+    public static final String DATABASE_NAME ="Bankf.db";
     //bank table Strings
     public static final String Table1_name= "Bank";
     public static final String BankCol1= "BankID";
@@ -61,22 +61,32 @@ public class SQLUtility extends SQLiteOpenHelper {
     public static final String Transition_table= "accountAdmin";
     public static final String AATableCol1= "accountid";
     public static final String AATableCol2= "workerid";
-
+    //AccountEvent table Strings
+    public static final String Table7_name = "accountevent";
+    public static final String EventCol1="EventID";
+    public static final String EventCol2="AccountID";
+    public static final String EventCol3="date";
+    public static final String EventCol4="receiving";
+    public static final String EventCol5="message";
 
     private SQLiteDatabase sqlProxy;
     private static SQLUtility sqlU;
-    private ArrayList<String> info;
+    ArrayList<String> info= new ArrayList<>();
 
-    public SQLUtility(Context context) {
+    private SQLUtility(Context context) {
         super(context, DATABASE_NAME, null, 1);
-        for (int i=0; i<8; i++){
-            info.add("");
-        }
+        makeList();
 
     }
 
+    private void makeList(){
+        for (int i=0; i<8; i++){
+            info.add("");
+        }
+    }
+
     //may can be run on singleton
-    public SQLUtility getSQLUtil(Context context){
+    public static SQLUtility getSQLUtil(Context context){
         if (sqlU == null){
             sqlU = new SQLUtility(context.getApplicationContext());
         }
@@ -92,6 +102,7 @@ public class SQLUtility extends SQLiteOpenHelper {
         createAccountAdmintTable(db);
         createBankCardTable(db);
         createLogInTable(db);
+        createEventTable(db);
     }
 
     @Override
@@ -112,7 +123,7 @@ public class SQLUtility extends SQLiteOpenHelper {
                 CustomerCol5+" varchar(25)," + CustomerCol6+" varchar(25)," +
                 CustomerCol7+" varchar(25)," + CustomerCol8+" varchar(25)," +
                 CustomerCol9+" varchar(25)," +
-                "CHECK (age>=18)," +
+
                 "FOREIGN KEY("+CustomerCol9+") REFERENCES "+Table1_name+"("+BankCol1+")" +
                 "ON DELETE CASCADE)");
     }
@@ -148,6 +159,7 @@ public class SQLUtility extends SQLiteOpenHelper {
                 BankCardCol7+" INTEGER DEFAULT -1, "+
                 BankCardCol8+" INTEGER DEFAULT 0," +
                 BankCardCol9+" varchar(25), " +
+                "CHECK (credit<0)," +
                 "FOREIGN KEY ("+BankCardCol9+") REFERENCES "+Table3_name+"("+AccountCol1+"))");
     }
 
@@ -156,6 +168,12 @@ public class SQLUtility extends SQLiteOpenHelper {
                 LogInCol2+" varchar(30), "+LogInCol3+" carchar(25), "+LogInCol4+" bool default '0')");
     }
 
+
+    private void createEventTable(SQLiteDatabase db){
+        db.execSQL("CREATE TABLE "+ Table7_name +"("+EventCol1 +" varchar(25) PRIMARY KEY NOT NULL,"
+        + EventCol2+" varchar(25),"+ EventCol3+" varchar(30)," + EventCol4+" varchar(25),"+EventCol5+" varchar(25)," +
+                "FOREIGN KEY("+EventCol2+") REFERENCES "+ Table3_name+"("+ AccountCol1+"))");
+    }
 
     //adds login info to the LogIn sql table
     public boolean makeLogIn(String user, String password, String ID){
@@ -197,9 +215,10 @@ public class SQLUtility extends SQLiteOpenHelper {
     //check if login info exists in the table and returns the cursor
     public Cursor logInCheck(String userName, String password){
         try{
+            System.out.println(userName + password);
             SQLiteDatabase db = this.getWritableDatabase();
-            Cursor cursor = db.rawQuery("SELECT * FROM "+Table6_name+" WHERE "+LogInCol1+" = "+userName +
-                    " AND "+LogInCol2+" = "+password, null);
+            Cursor cursor = db.rawQuery("SELECT * FROM "+Table6_name+" WHERE "+LogInCol1+" = '"+userName +
+                    "' AND "+LogInCol2+" = '"+password+"'", null);
             return cursor;
         }catch (Exception e){
             return null;
@@ -213,6 +232,7 @@ public class SQLUtility extends SQLiteOpenHelper {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
+            System.out.println(firstName+  lastName +  birthDate);
             contentValues.put(CustomerCol1, ID);
             contentValues.put(CustomerCol2, firstName);
             contentValues.put(CustomerCol3, lastName);
@@ -245,17 +265,78 @@ public class SQLUtility extends SQLiteOpenHelper {
         }
     }
 
-    public void addBankcard(){
+
+    //method for adding a new bankcard to database
+    public void addBankcard(BankCard bankCard, String pincode, String verificationCode){
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(BankCardCol1, bankCard.getNumber());
+            contentValues.put(BankCardCol2, pincode);
+            contentValues.put(BankCardCol3, verificationCode);
+            contentValues.put(BankCardCol4, bankCard.getType());
+            contentValues.put(BankCardCol5, bankCard.getOnlineLimit());
+            contentValues.put(BankCardCol6, bankCard.getCashLimit() );
+            contentValues.put(BankCardCol7, bankCard.getCheckingLimit());
+            contentValues.put(BankCardCol8, bankCard.getCredit());
+            contentValues.put(BankCardCol9, bankCard.getAccount());
+
+            db.insert(Table5_name, null, contentValues);
+            db.close();
+
+
+
+        }catch (Exception e){
+
+        }
+    }
+
+
+    //returns list of events to Account that can be used later. Gets them with account foriegn key
+   /* public ArrayList<AccountEvents> getEvents(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(, id);
+    }*/
+
+    //todo
+    public void addUserToBank(String id){
 
     }
 
-    public void updateAccount(){
 
+    //todo do this
+    public void addEvent(AccountEvents accEvent){
+        String proxy="";
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(EventCol1, accEvent.getID());
+        contentValues.put(EventCol2, accEvent.getAccountID());
+        contentValues.put(EventCol3, accEvent.getDateString());
+        contentValues.put(EventCol4, accEvent.getEntity());
+        contentValues.put(EventCol5, accEvent.getmessage());
+        db.insert(Table7_name, null, contentValues);
+        db.close();
     }
 
 
     //todo next here
-    public void updateLimits(){
+    public void updateLimits(BankCard bankCard){
+        String onlineLimit, cashLimit, checkingLimit, credit;
+        onlineLimit = Double.toString(bankCard.getOnlineLimit());
+        cashLimit = Double.toString(bankCard.getCashLimit());
+        checkingLimit = Double.toString(bankCard.getCheckingLimit());
+        credit = Double.toString(bankCard.getCredit());
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        String where= Table5_name+" = ?";
+        String [] proxy = new String[] {bankCard.getNumber()};
+        cv.put(BankCardCol5, onlineLimit);
+        cv.put(BankCardCol6, cashLimit);
+        cv.put(BankCardCol7, checkingLimit);
+        cv.put(BankCardCol8,  credit);
+        db.update(Table5_name, cv, where, proxy);
+        db.close();
 
     }
 
@@ -268,7 +349,7 @@ public class SQLUtility extends SQLiteOpenHelper {
             int savings;
 
             SQLiteDatabase db = this.getWritableDatabase();
-            Cursor cursor = db.rawQuery("SELECT * FROM "+Table3_name+" WHERE "+AccountCol2+" = "+userID, null);
+            Cursor cursor = db.rawQuery("SELECT * FROM "+Table3_name+" WHERE "+AccountCol2+" = '"+userID+"'", null);
             if(cursor.getCount()==0) {
                 return null;
             }
@@ -301,7 +382,7 @@ public class SQLUtility extends SQLiteOpenHelper {
             int savings;
 
             SQLiteDatabase db = this.getWritableDatabase();
-            Cursor cursor = db.rawQuery("SELECT * FROM "+Table5_name+" WHERE "+BankCardCol9+" = "+accountID, null);
+            Cursor cursor = db.rawQuery("SELECT * FROM "+Table5_name+" WHERE "+BankCardCol9+" = '"+accountID+"'", null);
             if(cursor.getCount()==0) {
                 return null;
             }
@@ -330,12 +411,16 @@ public class SQLUtility extends SQLiteOpenHelper {
     //the order the info lists info is name(full), birthdate, country, address, email, phonenumber, userName
     public ArrayList<String> getProfileInfo(String ID){
        try {
-           String proxy;
+           makeList();
+           String proxy, second;
            SQLiteDatabase db = this.getReadableDatabase();
            //cursor that searches for the ID's information from the customer atble
-           Cursor cursor = db.rawQuery("SELECT * FROM "+Table2_name+ " WHERE "+ CustomerCol1 +"= "+ ID, null);
-           proxy= cursor.getString(cursor.getColumnIndex(CustomerCol2))+"."+cursor.getString(cursor.getColumnIndex(CustomerCol3));
-           info.set(0, proxy);
+           Cursor cursor = db.rawQuery("SELECT * FROM "+Table2_name+ " WHERE "+ CustomerCol1 +"= '"+ ID+"'", null);
+           cursor.moveToFirst();
+           proxy= cursor.getString(cursor.getColumnIndex(CustomerCol2));
+           second = cursor.getString(cursor.getColumnIndex(CustomerCol3));
+           info.set(0, proxy+"."+second);
+
            proxy = cursor.getString(cursor.getColumnIndex(CustomerCol8));
            info.set(1,proxy);
            proxy= cursor.getString(cursor.getColumnIndex(CustomerCol6));
@@ -346,7 +431,8 @@ public class SQLUtility extends SQLiteOpenHelper {
            info.set(4, proxy);
            proxy= cursor.getString(cursor.getColumnIndex(CustomerCol7));
            info.set(5, proxy);
-           cursor = db.rawQuery("SELECT * FROM "+Table6_name+ " WHERE "+ LogInCol3 +"= "+ ID, null);
+           cursor = db.rawQuery("SELECT * FROM "+Table6_name+ " WHERE "+ LogInCol3 +"= '"+ ID+"'", null);
+           cursor.moveToFirst();
            proxy= cursor.getString(cursor.getColumnIndex(LogInCol1));
            info.set(6, proxy);
            db.close();
@@ -378,8 +464,8 @@ public class SQLUtility extends SQLiteOpenHelper {
         try{
             boolean isInData = false;
             SQLiteDatabase db = this.getWritableDatabase();
-            Cursor cursor = db.rawQuery("SELECT * FROM "+Table6_name+" WHERE "+LogInCol3+" = "+ID +
-                    " AND "+LogInCol2+" = "+password, null);
+            Cursor cursor = db.rawQuery("SELECT * FROM "+Table6_name+" WHERE "+LogInCol3+" = '"+ID+
+                    "' AND "+LogInCol2+" = '"+password+"'", null);
             if (cursor.getCount()==0){
 
             }else{
@@ -419,7 +505,7 @@ public class SQLUtility extends SQLiteOpenHelper {
     public void addMoney(String ID, double added){
         Cursor cursor;
         SQLiteDatabase db = this.getWritableDatabase();
-        cursor= db.rawQuery("Select * FROM "+ Table3_name+ " WHERE " + AccountCol1 +" = " + ID,null);
+        cursor= db.rawQuery("Select * FROM "+ Table3_name+ " WHERE " + AccountCol1 +" = '" + ID+"'",null);
         if(cursor.getCount()==0){
             return;
         }

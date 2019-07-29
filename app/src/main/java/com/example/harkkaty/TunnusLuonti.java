@@ -29,7 +29,7 @@ public class TunnusLuonti extends Fragment {
 
     public TunnusLuonti() {
         PUtility = personalInfoUtility.getInstance();
-        SUtil = StringUtility.getStringutility();
+        SUtil = StringUtility.getInstance();
         UserU = new UserUtility();
     }
 
@@ -44,7 +44,7 @@ public class TunnusLuonti extends Fragment {
         password= (EditText) UserInfoView.findViewById(R.id.passwordInput);
         repassword = (EditText) UserInfoView.findViewById(R.id.repassword);
 
-        sql = new SQLUtility(this.getContext());
+        sql =  SQLUtility.getSQLUtil(this.getContext());
 
         buttonlisteners();
         return UserInfoView;

@@ -3,7 +3,7 @@ package com.example.harkkaty;
 import java.util.ArrayList;
 
 public class ListUtility {
-    private ListUtility util = new ListUtility();
+    private static ListUtility util = new ListUtility();
     private User user;
 
     private StringUtility StringU;
@@ -12,10 +12,10 @@ public class ListUtility {
 
     private ListUtility(){
         user=user.getCurrentUser();
-        StringU=StringUtility.getStringutility();
+        StringU=StringUtility.getInstance();
     }
 
-    public ListUtility getListUtility(){
+    public static ListUtility getListUtility(){
         return util;
     }
 

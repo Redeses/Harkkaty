@@ -14,7 +14,7 @@ public class UserUtility {
     public UserUtility(){
         piu= personalInfoUtility.getInstance();
         allInfoList= piu.getAllInfoList();
-        SUtil = StringUtility.getStringutility();
+        SUtil = StringUtility.getInstance();
         proxy=null;
     }
 
@@ -24,6 +24,7 @@ public class UserUtility {
         sqlU.makeLogIn(userN, password, ID);
         sqlU.addInformation(ID, allInfoList.get(0), allInfoList.get(1), allInfoList.get(2), allInfoList.get(3),
                 allInfoList.get(4), allInfoList.get(5), allInfoList.get(6));
+        sqlU.addUserToBank(ID);
     }
 
     //todo make this method

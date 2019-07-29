@@ -15,7 +15,7 @@ public class CardInfo extends AppCompatActivity {
 
     private String proxyString;
     private int proxyInt;
-    //todo THIS NEXT SO MAKE THE CARD INFO ACTIVITY TO COMPLETION
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +30,7 @@ public class CardInfo extends AppCompatActivity {
         setValues();
     }
 
+    //sets all the infos of the activity
     private void setValues(){
         proxyString="";
         proxyString = bc.getNumber();
@@ -90,12 +91,27 @@ public class CardInfo extends AppCompatActivity {
         setValues();
     }
 
+    //deletes the card and returns to user cards
     public void deleteCard(View v){
         acc.removerCard(bc);
-        Intent newIntent= new Intent(CardInfo.this, Home.class);
+        Intent newIntent= new Intent(CardInfo.this, userCards.class);
         this.finish();
         CardInfo.this.startActivity(newIntent);
 
+    }
+
+    //goes to the previous place in the UI chain which is userCards
+    public void back(View v){
+        Intent newIntent= new Intent(CardInfo.this, userCards.class);
+        this.finish();
+        CardInfo.this.startActivity(newIntent);
+    }
+
+    //home button
+    public void home(View v){
+        Intent newIntent= new Intent(CardInfo.this, Home.class);
+        this.finish();
+        CardInfo.this.startActivity(newIntent);
     }
 
 }

@@ -29,6 +29,7 @@ public class Home extends AppCompatActivity {
         Intent getIntent = getIntent();
         //block where the userr who signed in is created to teh USer class
         userID = getIntent.getStringExtra("ID");
+        user = User.getCurrentUser();
         user.setUserID(userID);
         user.addCurrentUser(userID);
         user=user.getCurrentUser();
@@ -72,5 +73,9 @@ public class Home extends AppCompatActivity {
         Home.this.startActivity(newIntent);
     }
 
-
+    public void goCards(View v){
+        Intent newIntent= new Intent(Home.this, AccountActivity.class);
+        this.finish();
+        Home.this.startActivity(newIntent);
+    }
 }

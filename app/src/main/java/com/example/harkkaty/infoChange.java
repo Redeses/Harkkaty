@@ -30,7 +30,7 @@ public class infoChange extends Fragment {
     private String spinnerSring, id;
 
     public infoChange() {
-        StringU = StringUtility.getStringutility();
+        StringU = StringUtility.getInstance();
     }
 
 
@@ -39,6 +39,7 @@ public class infoChange extends Fragment {
                              Bundle savedInstanceState) {
         View infoChangeView = inflater.inflate(R.layout.fragment_change_info, container, false);
         //all of the text views have been change to include (I) in the end of their name
+        us=User.getCurrentUser();
         name = (TextView) infoChangeView.findViewById(R.id.NameI);
         birthdate = (TextView) infoChangeView.findViewById(R.id.dateI);
         username = (TextView) infoChangeView.findViewById(R.id.userI);

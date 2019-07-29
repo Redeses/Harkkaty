@@ -131,7 +131,6 @@ public class XML_Utility {
        }
     }
 
-
     //creates new xml.file
     private void createEventXml(Document document, String accountID){//, String time, String receiver, String amount, String message, String entity ){
         document = db.newDocument();
@@ -147,7 +146,7 @@ public class XML_Utility {
         StreamResult streamResult = new StreamResult(new File(filepath));
     }
 
-
+/*
     //gets evetns based on accountID and returns them as a Accountevent list
     public ArrayList<AccountEvents> getEvents(String ID){
         ArrayList<AccountEvents> accEvents = new ArrayList<>();
@@ -158,9 +157,9 @@ public class XML_Utility {
             Document doc =  builder.parse(filepath);
             doc.getDocumentElement().normalize();
             String proxy;
-            NodeList Nlist=doc.getDocumentElement().getElementsByTagName(ID);//todo see if this works, might have issues
+            NodeList Nlist=doc.getDocumentElement().getElementsByTagName(ID);//
             Node nod = Nlist.item(0);
-            Nlist= nod.getChildNodes();//todo maybe working
+            Nlist= nod.getChildNodes();//
             //Date date, String Raccount, double Amount, String message, String entity
             for (int i=0; i<Nlist.getLength(); i++){
                 Node node=Nlist.item(i);
@@ -185,7 +184,7 @@ public class XML_Utility {
             e.printStackTrace();
         }
         return  accEvents;
-    }
+    }*/
 
 
 }

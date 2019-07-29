@@ -41,11 +41,12 @@ public class AccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
-        listU = listU.getListUtility();
+        manager=getSupportFragmentManager();
+        listU = ListUtility.getListUtility();
         user = user.getCurrentUser();
         accounts = findViewById(R.id.Accounts);
         makeAccountView = findViewById(R.id.newAccount);
-        StringU = StringUtility.getStringutility();
+        StringU = StringUtility.getInstance();
 
         recyclerView = findViewById(R.id.AccountEvents);
         recycManager = new LinearLayoutManager(this);
@@ -55,6 +56,7 @@ public class AccountActivity extends AppCompatActivity {
     }
 
 
+    //puts listener for the spinner
     private void makeSpinner(){
         String[] str = new String[user.getAccountAmount()];
         //the proxy is used to find account selected
@@ -106,12 +108,14 @@ public class AccountActivity extends AppCompatActivity {
         if(manager.getFragments().isEmpty()){
             makeAccountView.setVisibility(View.VISIBLE);
             fragment = new makeAccount();
-            makeAccountView.bringToFront();
+            makeAccountView.bringToFront();//todo heree
             FragmentTransaction transaction = manager.beginTransaction();
             Intent intent = new Intent();
+            System.out.println("BEfore manage");
             transaction.replace(R.id.makeTheAccount, fragment);
             transaction.commit();
         }else{
+            System.out.println("ELSE");
             makeAccountView.setVisibility(View.INVISIBLE);
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.detach(fragment);
@@ -131,8 +135,9 @@ public class AccountActivity extends AppCompatActivity {
     //Home button which reStart home activity
     public void goHome(View v){
         Intent newIntent= new Intent(AccountActivity.this, Home.class);
-        this.finish();
+
         AccountActivity.this.startActivity(newIntent);
+        this.finish();
     }
 
 }

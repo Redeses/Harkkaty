@@ -2,12 +2,16 @@ package com.example.harkkaty;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -24,6 +28,9 @@ public class userCards extends AppCompatActivity {
     private ArrayList<BankCard> bankCardList;
     private StringUtility StringU;
     private int type;
+    private FrameLayout newCardFrame;
+    private Fragment fragment;
+    private FragmentManager manager;
 
 
     @Override
@@ -34,7 +41,9 @@ public class userCards extends AppCompatActivity {
         listU= listU.getListUtility();
         accounts= findViewById(R.id.accountSpinner);
         position=getIntent().getIntExtra("spinnePosition", 0);
-        StringU = StringUtility.getStringutility();
+        StringU = StringUtility.getInstance();
+        newCardFrame = findViewById(R.id.makeNewCard);
+        newCardFrame.setVisibility(View.INVISIBLE);
 
         makeSpinner();
 
@@ -82,6 +91,38 @@ public class userCards extends AppCompatActivity {
         cardnumber= StringU.getCardNumber(cardnumber);
         BankCard proxyCard= account.getACard(cardnumber);
         newIntent.putExtra("BankCard", proxyCard);
+        this.finish();
+        userCards.this.startActivity(newIntent);
+    }
+
+
+    //method for opening a framelyaout where user can add a card
+    public void addACard(View v){
+        if (manager.getBackStackEntryCount()!=0){
+            hide();
+        }
+        newCardFrame.setVisibility(View.VISIBLE);
+        fragment = new makeAccount();
+        newCardFrame.bringToFront();
+        FragmentTransaction transaction = manager.beginTransaction();
+        Intent intent = new Intent();
+        transaction.replace(R.id.makeTheAccount, fragment);
+        transaction.commit();
+
+    }
+
+    public void hide(){
+        newCardFrame.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.detach(fragment);
+        transaction.commit();
+        setViewCards();
+
+    }
+
+
+    public void home(View v){
+        Intent newIntent= new Intent(userCards.this, Home.class);
         this.finish();
         userCards.this.startActivity(newIntent);
     }
