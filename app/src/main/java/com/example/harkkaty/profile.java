@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class profile extends Fragment {
     private SQLUtility sql;
     private Fragment infoFrag;
     private String countryProxy;
+    public Button toInfo, toPassword;
     private Spinner countries;
 
     public profile() {
@@ -43,11 +45,14 @@ public class profile extends Fragment {
         View viewFrag = inflater.inflate(R.layout.fragment_profile, container, false);
         name = (TextView) viewFrag.findViewById(R.id.NameI);
         birthdate= (TextView) viewFrag.findViewById(R.id.dateI);
-        address = (TextView) viewFrag.findViewById(R.id.adressI);
+        address = (TextView) viewFrag.findViewById(R.id.addressI);
         phone = (TextView) viewFrag.findViewById(R.id.phoneI);
         email = (TextView) viewFrag.findViewById(R.id.emailI);
         username= (TextView) viewFrag.findViewById(R.id.userI);
+        toInfo = (Button) viewFrag.findViewById(R.id.infoChange);
+        toPassword = (Button) viewFrag.findViewById(R.id.passwordChange);
         sql=sql.getSQLUtil(this.getContext());
+        setlistener();
         us = User.getCurrentUser();
         getInfo();
         return viewFrag;
@@ -59,6 +64,20 @@ public class profile extends Fragment {
         getInfo();
     }
 
+    public void setlistener(){
+        toInfo.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                changeInfo();
+            }
+        });
+        toPassword.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                changePassword();
+            }
+        });
+    }
 
     //todo make a method that adds all the info to be used in profile
     public void getInfo(){
@@ -69,6 +88,7 @@ public class profile extends Fragment {
 
         //the order the info lists info is name(full), birthdate, country, address, email, phonenumber
         allnfolist=us.getAllInfo();
+        System.out.println(allnfolist);//todo remove
         name.setText(allnfolist.get(0));
         birthdate.setText(allnfolist.get(1));
         String proxy;
@@ -76,11 +96,12 @@ public class profile extends Fragment {
         address.setText(proxy);
         email.setText(allnfolist.get(4));
         phone.setText(allnfolist.get(5));
+        username.setText(allnfolist.get(6));
 
     }
 
 
-    public void changePassword(View view){
+    public void changePassword(){
         FragmentManager fragManager = getFragmentManager();
         FragmentTransaction fragtrans = fragManager.beginTransaction();
         infoFrag = new password();
@@ -90,7 +111,7 @@ public class profile extends Fragment {
         fragtrans.commit();
     }
 
-    public void changeInfo(View v){
+    public void changeInfo(){
         FragmentManager fragManager = getFragmentManager();
         FragmentTransaction fragtrans = fragManager.beginTransaction();
         infoFrag = new infoChange();
@@ -98,6 +119,7 @@ public class profile extends Fragment {
         fragtrans.hide(profile.this);
         fragtrans.replace(R.id.profileSettings, infoFrag);
         fragtrans.commit();
+
     }
 
 }

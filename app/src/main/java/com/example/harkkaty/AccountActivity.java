@@ -24,7 +24,7 @@ public class AccountActivity extends AppCompatActivity {
     private Account account;
     private FragmentManager manager;
     private Fragment fragment;
-    private FrameLayout makeAccountView;
+    public FrameLayout makeAccountView;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter recycAdapter;
     private RecyclerView.LayoutManager recycManager;
@@ -46,6 +46,8 @@ public class AccountActivity extends AppCompatActivity {
         user = user.getCurrentUser();
         accounts = findViewById(R.id.Accounts);
         makeAccountView = findViewById(R.id.newAccount);
+        makeAccountView.setBackgroundColor(getResources().getColor(R.color.white));
+        makeAccountView.setVisibility(View.INVISIBLE);
         StringU = StringUtility.getInstance();
 
         recyclerView = findViewById(R.id.AccountEvents);
@@ -63,6 +65,8 @@ public class AccountActivity extends AppCompatActivity {
 
         str= listU.MakeAccountList(user.getAccountAmount());
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, str);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        accounts.setAdapter(adapter);
         accounts.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -82,7 +86,13 @@ public class AccountActivity extends AppCompatActivity {
 
     //a method which trigger when spinner item is changed and open the old events
     private void setViewEvents(){
+        if (account ==null){
+            return;
+        }
         events= account.setEvents();//TOdo make this work
+        if(events==null){
+            return;
+        }
         String[] str = StringU.getFourEvents(events);
 
         recycAdapter = new myAdapter(str);
@@ -106,13 +116,14 @@ public class AccountActivity extends AppCompatActivity {
     // goes to add account fragment; there new accounts can be made
     public void goToAddAccount(View v){
         if(manager.getFragments().isEmpty()){
+            makeAccountView = findViewById(R.id.newAccount);
             makeAccountView.setVisibility(View.VISIBLE);
             fragment = new makeAccount();
-            makeAccountView.bringToFront();//todo heree
+            makeAccountView.bringToFront();
             FragmentTransaction transaction = manager.beginTransaction();
             Intent intent = new Intent();
             System.out.println("BEfore manage");
-            transaction.replace(R.id.makeTheAccount, fragment);
+            transaction.replace(makeAccountView.getId(), fragment);
             transaction.commit();
         }else{
             System.out.println("ELSE");
@@ -135,9 +146,9 @@ public class AccountActivity extends AppCompatActivity {
     //Home button which reStart home activity
     public void goHome(View v){
         Intent newIntent= new Intent(AccountActivity.this, Home.class);
-
-        AccountActivity.this.startActivity(newIntent);
         this.finish();
+        AccountActivity.this.startActivity(newIntent);
+
     }
 
 }

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
@@ -17,6 +18,7 @@ public class makeAccount extends Fragment {
     private EditText balance;
     private CheckBox savings;
     private User user;
+    private Button make;
     public makeAccount() {
 
     }
@@ -28,11 +30,18 @@ public class makeAccount extends Fragment {
         View makeAccountFrag =inflater.inflate(R.layout.fragment_make_account, container, false);
         balance = (EditText) makeAccountFrag.findViewById(R.id.giveBalance);
         savings = makeAccountFrag.findViewById(R.id.isSavings);
-        user = user.getCurrentUser();//todo user user
+        make = makeAccountFrag.findViewById(R.id.makeTheAccount);
+        make.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeAccount();
+            }
+        });
+        user = user.getCurrentUser();
         return makeAccountFrag;
     }
 
-    public void makeTheAccount(View v){
+    public void makeAccount(){
         boolean saving=false;
         if (savings.isChecked()){
             saving = true;
@@ -42,6 +51,8 @@ public class makeAccount extends Fragment {
             return;
         }
         user.addAccount(saving, balance.getText().toString());
+        user.setAccounts();
+
         //todo toast for showing that the account was succesfully done
         balance.setText("");
     }

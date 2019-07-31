@@ -149,7 +149,7 @@
         android:layout_marginRight="18dp">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/email"
+            android:id="@+id/emailI"
             android:layout_width="match_parent"
             android:layout_height="41dp"
             android:inputType="textEmailAddress" />

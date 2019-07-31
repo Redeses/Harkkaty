@@ -30,13 +30,10 @@ public class Home extends AppCompatActivity {
         //block where the userr who signed in is created to teh USer class
         userID = getIntent.getStringExtra("ID");
         user = User.getCurrentUser();
-        user.setUserID(userID);
-        user.addCurrentUser(userID);
-        user=user.getCurrentUser();
+
         sql=sql.getSQLUtil(this);
         profileSettings = findViewById(R.id.profileSettings);
-        profileSettings.bringToFront();
-        profileSettings.setBackgroundColor(Color.WHITE);
+        profileSettings.setBackgroundColor(getResources().getColor(R.color.white));
         profileSettings.setVisibility(View.INVISIBLE);
         settings=(Button) findViewById(R.id.setting);
         manager = getSupportFragmentManager();
@@ -51,7 +48,6 @@ public class Home extends AppCompatActivity {
         if(manager.getFragments().isEmpty()){
             profileSettings.setVisibility(View.VISIBLE);
             fragment = new profile();
-
             FragmentTransaction transaction = manager.beginTransaction();
             Intent intent = new Intent();
             intent.putExtra("ID", userID);
@@ -74,8 +70,27 @@ public class Home extends AppCompatActivity {
     }
 
     public void goCards(View v){
-        Intent newIntent= new Intent(Home.this, AccountActivity.class);
+        Intent newIntent= new Intent(Home.this, userCards.class);
         this.finish();
+        Home.this.startActivity(newIntent);
+    }
+
+    /*public void goEvents(View v){
+        Intent newIntent= new Intent(Home.this, .class);
+        this.finish();
+        Home.this.startActivity(newIntent);
+    }*/
+
+    public void goPayments(View v){
+        Intent newIntent= new Intent(Home.this, AccountNewActivity.class);
+        this.finish();
+        Home.this.startActivity(newIntent);
+    }
+
+    public void logout(View v){
+        Intent newIntent= new Intent(Home.this, MainActivity.class);
+        this.finish();
+        user.resetUser();
         Home.this.startActivity(newIntent);
     }
 }

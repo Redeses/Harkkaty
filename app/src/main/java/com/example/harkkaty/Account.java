@@ -26,6 +26,7 @@ public class Account implements Serializable {
         accEvent = null;
         cards=null;
         xml = XML_Utility.getInstance();
+        sql = SQLUtility.getSQLUtil(null);
     }
 
 
@@ -74,7 +75,7 @@ public class Account implements Serializable {
         ArrayList<AccountEvents> events=null;
         //todo make this work, aslo make sure they are from newest to oldest
         //events=xml.getEvents(ID);//should return a event list
-        //events= sql.getEvents();
+        events= sql.getEvents(getAccountNumber());
         return events;
     }
 
@@ -112,6 +113,9 @@ public class Account implements Serializable {
 
     //returns the size of the bankcard list to be used
     public int getCardSize(){
+        if (cards==null){
+            return 0;
+        }
         return cards.size();
     }
 

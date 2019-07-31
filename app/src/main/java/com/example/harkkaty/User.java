@@ -49,6 +49,7 @@ public class User {
         accounts = null;
         userName="";
         stringu = StringUtility.getInstance();
+        sql = SQLUtility.getSQLUtil(null);
     }
 
     public static User getCurrentUser(){
@@ -83,7 +84,6 @@ public class User {
     //Todo make this method work so you will get current info here when you sign in
     public void addCurrentUser(String id){
         infoList=sql.getProfileInfo(id);
-        System.out.println(infoList+ "<--hereee");//todo remove
         setCurrentUser();
         setAccounts();
     }
@@ -94,7 +94,7 @@ public class User {
     }
 
     //method which gets all users account data from sqlFile and adds it to here, is run when new user is made
-    private void setAccounts(){
+    public void setAccounts(){
         accounts = sql.getAccounts(userID);
     }
 
@@ -113,7 +113,7 @@ public class User {
     public void addAccount(boolean savings, String balanceString){
         String accountID =stringu.makeAccountID(userID, savings);
         int proxy;
-        sql.addAccount(userID, accountID, savings, balanceString);
+        sql.addAccount(accountID, userID, savings, balanceString);
         Account acc = new Account();
         if(savings){
             proxy = 1;
@@ -121,20 +121,36 @@ public class User {
             proxy = 0;
         }
         acc.setAccount(accountID, proxy, balanceString);
+        System.out.println(acc==null);
+        accounts.add(acc);
     }
 
     //this methdo gets account based on teh spinner string sent here
     public Account getSelectedAccount(String spinneString){
         Account proxyAccount;
         String id;
-        String[] str = spinneString.split("\n");
-        id = str[1];
+        String[] str = new String[2];
+        str = spinneString.split(":");
+        id = str[0];
         for (int i = 0; i<accounts.size() ; i++){
             proxyAccount=accounts.get(i);
-            if (proxyAccount.getAccountNumber().equals(spinneString)){
+            System.out.println(id);
+            if (proxyAccount.getAccountNumber().equals(id)){
                 return proxyAccount;
             }
         }
         return null;
+    }
+
+    //returns accounts position in teh spinner base on a string given
+    public int getAccountNumberInSpinner(String number){
+        int i=0;
+        for (Account acc: accounts){
+            if (acc.getAccountNumber().equals(number)){
+                return i;
+            }
+            i++;
+        }
+        return 0;
     }
 }

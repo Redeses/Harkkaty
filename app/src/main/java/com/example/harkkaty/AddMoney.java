@@ -1,11 +1,13 @@
 package com.example.harkkaty;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 
@@ -13,6 +15,8 @@ public class AddMoney extends Fragment {
 
     private Account acc;
     private EditText moneyAmount;
+    public Button transaction;
+    public User user;
 
     public AddMoney() {
 
@@ -26,6 +30,9 @@ public class AddMoney extends Fragment {
         View cashFragView =inflater.inflate(R.layout.fragment_add_money, container, false);
         acc= (Account) getArguments().getSerializable("account");
         moneyAmount = cashFragView.findViewById(R.id.addMoney);
+        transaction = cashFragView.findViewById(R.id.addM);
+        user = User.getCurrentUser();
+        setListener();
         return cashFragView;
     }
 
@@ -35,14 +42,25 @@ public class AddMoney extends Fragment {
     }
 
 
+    public void setListener(){
+        transaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addTheMoney();
+            }
+        });
+    }
+
     //adds money to the account
-    public void addTheMoney(View v){
+    public void addTheMoney(){
         String proxy = moneyAmount.getText().toString();
         if (proxy==""){
             //todo toast text here
             return;
         }
         acc.addMoney(Double.parseDouble(proxy));
+        AccountNewActivity activity = (AccountNewActivity) getActivity();
+        activity.setSpinnet(user.getAccountNumberInSpinner(acc.getAccountNumber()));
 
     }
 

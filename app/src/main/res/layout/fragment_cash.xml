@@ -12,9 +12,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="116dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginRight="56dp" />
+        android:layout_marginTop="220dp"
+        android:layout_marginEnd="53dp"
+        android:layout_marginRight="53dp" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="274dp"
@@ -22,7 +22,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="263dp"
+        android:layout_marginTop="339dp"
         android:layout_marginEnd="81dp"
         android:layout_marginRight="81dp">
 
@@ -39,9 +39,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="195dp"
-        android:layout_marginEnd="81dp"
-        android:layout_marginRight="81dp"
+        android:layout_marginTop="283dp"
+        android:layout_marginEnd="73dp"
+        android:layout_marginRight="73dp"
         android:entries="@array/card_type" />
 
     <Button
@@ -51,9 +51,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="342dp"
-        android:layout_marginEnd="167dp"
-        android:layout_marginRight="167dp"
+        android:layout_marginTop="405dp"
+        android:layout_marginEnd="171dp"
+        android:layout_marginRight="171dp"
         android:onClick="makePayment"
         android:text="Button" />
 </RelativeLayout>

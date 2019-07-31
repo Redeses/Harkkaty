@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private addnfoView infoView;
     private SQLUtility sql;
     private StringUtility stringU;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
 
     //todo make switch activity
     protected void switchToMainUserView(){
+        user = User.getCurrentUser();
+        user.setUserID(ID);
+        user.addCurrentUser(ID);
         Intent newIntent= new Intent(MainActivity.this, Home.class);
         newIntent.putExtra("ID", ID);
         this.finish();

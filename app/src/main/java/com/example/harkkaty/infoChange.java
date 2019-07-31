@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class infoChange extends Fragment {
     private User us;
     private ArrayList<String> infoList;
     private StringUtility StringU;
+    public Button finsih, cancle;
 
     private int spinnerPoint=0;
     private String spinnerSring, id;
@@ -47,6 +49,9 @@ public class infoChange extends Fragment {
         phone = (EditText) infoChangeView.findViewById(R.id.phoneI);
         email = (EditText) infoChangeView.findViewById(R.id.emailI);
         countrySpinner = (Spinner) infoChangeView.findViewById(R.id.countries);
+        finsih= (Button) infoChangeView.findViewById(R.id.finishInfo);
+        cancle = (Button) infoChangeView.findViewById(R.id.cancel);
+        setLister();
         Intent intent = new Intent();
         id = intent.getStringExtra("ID");
         setTextInView();
@@ -54,7 +59,22 @@ public class infoChange extends Fragment {
         return infoChangeView;
     }
 
-    public void cancelA(View v){
+    private void setLister(){
+        finsih.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finishInfo();
+            }
+        });
+        cancle.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                cancelA();
+            }
+        });
+    }
+
+    public void cancelA(){
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.detach(infoChange.this);
@@ -62,7 +82,7 @@ public class infoChange extends Fragment {
         transaction.commit();
     }
 
-    public void finishInfo(View v){
+    public void finishInfo(){
         if(checkTexts()==false){
             //todo toast here and highlights
             return;

@@ -9,18 +9,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class password extends Fragment {
 
     private EditText password, newPassword, ReNewPassword;
     private String newpassword, ID;
     private SQLUtility sql;
+    public Button back, change;
 
 
     public password() {
@@ -35,9 +35,27 @@ public class password extends Fragment {
         password = passwordFragView.findViewById(R.id.oldP);
         newPassword = passwordFragView.findViewById(R.id.newP);
         ReNewPassword = passwordFragView.findViewById(R.id.reNewP);
+        change = (Button) passwordFragView.findViewById(R.id.confirm);
+        back = (Button) passwordFragView.findViewById(R.id.confirm);
+        setButtonListeners();
         Intent intent = new Intent();
         ID= intent.getStringExtra("ID");
         return passwordFragView;
+    }
+
+    private void setButtonListeners(){
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePassword();
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
     }
 
     public void goBack(){

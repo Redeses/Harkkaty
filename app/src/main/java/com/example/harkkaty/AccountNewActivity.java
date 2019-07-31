@@ -37,10 +37,12 @@ public class AccountNewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account_new);
         frameLayout = findViewById(R.id.variableVIew);
         frameLayout.setBackgroundColor(Color.WHITE);
+        accountSpinner = findViewById(R.id.AccountSpinner);
         frameLayout.setVisibility(View.INVISIBLE);
+        manager = getSupportFragmentManager();
         user= user.getCurrentUser();
         listU= listU.getListUtility();
-        setSpinnet();
+        setSpinnet(0);
     }
 
     //add a fragment int the framelayout. the fragment is closed by pressing the same button.
@@ -139,17 +141,18 @@ public class AccountNewActivity extends AppCompatActivity {
 
 
     //sets spinner that are used in the fragments and their method
-    private void setSpinnet(){
+    public void setSpinnet(int select){
         String[] str = new String[user.getAccountAmount()];
         //the proxy is used to find account selected
-        if (user.getAccountAmount()==0){
+        /*if (user.getAccountAmount()==0){
             frameLayout.setVisibility(View.INVISIBLE);
             return;
-        }
+        }*/
         str= listU.MakeAccountList(user.getAccountAmount());
-
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, str);
-        accountSpinner.setSelection(0);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        accountSpinner.setAdapter(adapter);
+        accountSpinner.setSelection(select);
         proxy= accountSpinner.getSelectedItem().toString();
         account=user.getSelectedAccount(proxy);
         accountSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -182,7 +185,7 @@ public class AccountNewActivity extends AppCompatActivity {
     //returns to Accountactivity
     public void goBack(View v){
         Intent newIntent= new Intent(AccountNewActivity.this, AccountActivity.class);
-        this.finish();
+        AccountNewActivity.this.finish();
         AccountNewActivity.this.startActivity(newIntent);
     }
 
@@ -190,7 +193,7 @@ public class AccountNewActivity extends AppCompatActivity {
     //goes to Home activity
     public void goHome(View v){
         Intent newIntent= new Intent(AccountNewActivity.this, Home.class);
-        this.finish();
+        AccountNewActivity.this.finish();
         AccountNewActivity.this.startActivity(newIntent);
     }
 

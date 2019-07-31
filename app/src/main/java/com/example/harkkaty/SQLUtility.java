@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.app.ActionBar;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SQLUtility extends SQLiteOpenHelper {
     public static final String DATABASE_NAME ="Bankf.db";
@@ -68,10 +69,12 @@ public class SQLUtility extends SQLiteOpenHelper {
     public static final String EventCol3="date";
     public static final String EventCol4="receiving";
     public static final String EventCol5="message";
+    public static final String EventCol6="amount";
 
     private SQLiteDatabase sqlProxy;
     private static SQLUtility sqlU;
     ArrayList<String> info= new ArrayList<>();
+    DateC datec=DateC.getDatec();
 
     private SQLUtility(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -172,6 +175,7 @@ public class SQLUtility extends SQLiteOpenHelper {
     private void createEventTable(SQLiteDatabase db){
         db.execSQL("CREATE TABLE "+ Table7_name +"("+EventCol1 +" varchar(25) PRIMARY KEY NOT NULL,"
         + EventCol2+" varchar(25),"+ EventCol3+" varchar(30)," + EventCol4+" varchar(25),"+EventCol5+" varchar(25)," +
+                EventCol6 + " varchar(30),"+
                 "FOREIGN KEY("+EventCol2+") REFERENCES "+ Table3_name+"("+ AccountCol1+"))");
     }
 
@@ -258,7 +262,7 @@ public class SQLUtility extends SQLiteOpenHelper {
             contentValues.put(AccountCol4, savings);
             contentValues.put(AccountCol3, balanceString);
 
-            db.insert(Table2_name, null, contentValues);
+            db.insert(Table3_name, null, contentValues);
             db.close();
         }catch (Exception e){
 
@@ -448,13 +452,12 @@ public class SQLUtility extends SQLiteOpenHelper {
     public void updateUserInfo(String country, String address, String email, String phoneN, String id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        String where= Table2_name+" = ?";
-        String [] proxy = new String[] {id};
+        String where= CustomerCol1+" = "+ id;
         cv.put(CustomerCol6, country);
         cv.put(CustomerCol4, address);
         cv.put(CustomerCol5, email);
         cv.put(CustomerCol7,  phoneN);
-        db.update(Table2_name, cv, where, proxy);
+        db.update(Table2_name, cv, where, null);
         db.close();
 
     }
@@ -482,10 +485,10 @@ public class SQLUtility extends SQLiteOpenHelper {
     public void updatePassword(String ID, String password){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        String where= Table6_name+" = ?";
+        String where= LogInCol3+" = "+ ID;
         String [] proxy = new String[] {ID};
         cv.put(LogInCol2, password);
-        db.update(Table2_name, cv, where, proxy);
+        db.update(Table6_name, cv, where, proxy);
         db.close();
     }
 
@@ -518,6 +521,47 @@ public class SQLUtility extends SQLiteOpenHelper {
         String [] proxy = new String[] {ID};
         cv.put(AccountCol3, proxyS);
         db.update(Table2_name, cv, where, proxy);
+        db.close();
+    }
+
+        //todo continue
+    //Date date, String Raccount, double Amount, String message, String entity, String id
+    public ArrayList<AccountEvents> getEvents(String number){
+        String date, Raccount, amount, message, entity, id;
+        Date thedate;
+        SQLiteDatabase db = getReadableDatabase();
+        AccountEvents accevent;
+        ArrayList<AccountEvents> events=null;
+        Cursor cursor = db.rawQuery("SELECT * FROM "+Table7_name+" WHERE "+EventCol2+" = '"+number+"'", null);
+        cursor.moveToFirst();
+        for (int i=0; i<cursor.getCount(); i++){
+            accevent= new AccountEvents();
+            date= cursor.getString(cursor.getColumnIndex(EventCol3));
+            thedate = datec.makeIntoDate(date);
+            Raccount = number;
+            amount = cursor.getString(cursor.getColumnIndex(EventCol6));
+            message=cursor.getString(cursor.getColumnIndex(EventCol5));
+            entity = cursor.getString(cursor.getColumnIndex(EventCol4));
+            id = cursor.getString(cursor.getColumnIndex(EventCol1));
+            accevent.AccountEvents(thedate, Raccount, Double.parseDouble(amount), message, entity, id);
+            events.add(accevent);
+        }
+        return events;
+    }
+
+    //todo this
+    //Date date, String Raccount, double Amount, String message, String entity, String id
+    public void addEvent(Date date, String Raccount, double Amount, String message, String Entity, String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        String where= EventCol2+" = "+ Raccount;
+        String [] proxy = new String[] {};
+        cv.put(EventCol3, datec.getSimpleDate(date));
+        cv.put(EventCol1, id);
+        cv.put(EventCol2, Raccount);
+        cv.put(EventCol4, Entity);
+        cv.put(EventCol5, message);
+        db.update(Table7_name, cv, where, proxy);
         db.close();
     }
 

@@ -12,9 +12,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="128dp"
-        android:layout_marginRight="128dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="123dp"
+        android:layout_marginRight="123dp"
         android:text="@string/TV_makeCard"
         android:textSize="24sp" />
 
@@ -25,9 +25,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="446dp"
-        android:layout_marginEnd="164dp"
-        android:layout_marginRight="164dp"
+        android:layout_marginTop="335dp"
+        android:layout_marginEnd="133dp"
+        android:layout_marginRight="133dp"
         android:text="Button" />
 
     <Spinner
@@ -37,9 +37,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="128dp"
-        android:layout_marginEnd="63dp"
-        android:layout_marginRight="63dp"
+        android:layout_marginTop="103dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
         android:entries="@array/actual_card_type" />
 
     <TextView
@@ -49,9 +49,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="158dp"
-        android:layout_marginEnd="238dp"
-        android:layout_marginRight="238dp"
+        android:layout_marginTop="127dp"
+        android:layout_marginEnd="235dp"
+        android:layout_marginRight="235dp"
         android:text="@string/TV_chekcingLimit"
         android:textSize="20sp" />
 
@@ -62,9 +62,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="359dp"
-        android:layout_marginEnd="235dp"
-        android:layout_marginRight="235dp"
+        android:layout_marginTop="283dp"
+        android:layout_marginEnd="244dp"
+        android:layout_marginRight="244dp"
         android:text="@string/TV_credit"
         android:textSize="20sp" />
 
@@ -75,9 +75,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="282dp"
-        android:layout_marginEnd="248dp"
-        android:layout_marginRight="248dp"
+        android:layout_marginTop="234dp"
+        android:layout_marginEnd="243dp"
+        android:layout_marginRight="243dp"
         android:text="@string/TV_webLimit"
         android:textSize="20sp" />
 
@@ -88,9 +88,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="219dp"
-        android:layout_marginEnd="242dp"
-        android:layout_marginRight="242dp"
+        android:layout_marginTop="183dp"
+        android:layout_marginEnd="243dp"
+        android:layout_marginRight="243dp"
         android:text="@string/TV_cashLimit"
         android:textSize="20sp" />
 
@@ -100,7 +100,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="157dp"
+        android:layout_marginTop="127dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp">
 
@@ -111,35 +111,38 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:layout_width="206dp"
-        android:layout_height="41dp"
+        android:layout_width="238dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="222dp"
-        android:layout_marginEnd="27dp"
-        android:layout_marginRight="27dp">
+        android:layout_marginTop="170dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/CashL"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="41dp"
+            android:layout_alignStart="@+id/null"
+            android:layout_alignTop="@+id/null" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:layout_width="226dp"
+        android:layout_width="215dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="272dp"
-        android:layout_marginEnd="7dp"
-        android:layout_marginRight="7dp">
+        android:layout_marginTop="223dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginRight="23dp">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/OnlineL"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/null" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -148,9 +151,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="343dp"
-        android:layout_marginEnd="21dp"
-        android:layout_marginRight="21dp">
+        android:layout_marginTop="270dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginRight="33dp">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/Credit"

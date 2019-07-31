@@ -54,7 +54,7 @@ public class addnfoView extends Fragment{
         fragInfoView = inflater.inflate(R.layout.fragment_addnfo_view, container, false);
         bacc = (Button) fragInfoView.findViewById(R.id.cancle);
         forward = (Button) fragInfoView.findViewById(R.id.cont);
-        emailE = (EditText) fragInfoView.findViewById(R.id.email);
+        emailE = (EditText) fragInfoView.findViewById(R.id.emailI);
         phone = (EditText) fragInfoView.findViewById(R.id.phonennumber);
         firstName = (EditText) fragInfoView.findViewById(R.id.firstname);
         lastName = (EditText) fragInfoView.findViewById(R.id.lastname);

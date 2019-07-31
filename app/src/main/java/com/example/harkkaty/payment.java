@@ -44,7 +44,6 @@ public class payment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View paymentFragView=inflater.inflate(R.layout.fragment_payment, container, false);
-        AccountID = (Account) getArguments().getSerializable("account");
         toAccount = paymentFragView.findViewById(R.id.paymentAccount);
         receiver = paymentFragView.findViewById(R.id.paymentReceiver);
         amount = paymentFragView.findViewById(R.id.paymentAmount);
@@ -62,6 +61,7 @@ public class payment extends Fragment {
     //method taht checks if all relevant fields are filled and makes event log of it
     ///also updates the account that the money is sent to with the currency/if it exists
     public void makePayment(View v){
+        AccountID = (Account) getArguments().getSerializable("account");
         String proyx=amount.getText().toString();
         if (proyx==""){
 

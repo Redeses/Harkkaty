@@ -73,7 +73,7 @@ public class StringUtility {
     */
     public String makeAccountToString(Account acc){
         String proxy="";
-        proxy= acc.getAccountNumber() + "/n €   "+ acc.getBalance();
+        proxy= acc.getAccountNumber()+":   "+ acc.getBalance()+ "€";
         return proxy;
     }
 
@@ -117,6 +117,10 @@ public class StringUtility {
 
     //method used for getting cards from account into a string list
     public String[] getCards(ArrayList<BankCard> arrayCards){
+        if (arrayCards==null){
+            String[] str = new String[0];
+            return str;
+        }
         String[] str = new String[arrayCards.size()];
         String proxy;
         BankCard proxyCard;

@@ -44,6 +44,8 @@ public class userCards extends AppCompatActivity {
         StringU = StringUtility.getInstance();
         newCardFrame = findViewById(R.id.makeNewCard);
         newCardFrame.setVisibility(View.INVISIBLE);
+        newCardFrame.setBackgroundColor(getResources().getColor(R.color.white));
+        manager = getSupportFragmentManager();
 
         makeSpinner();
 
@@ -56,6 +58,8 @@ public class userCards extends AppCompatActivity {
 
         str= listU.MakeAccountList(user.getAccountAmount());
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, str);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        accounts.setAdapter(adapter);
         accounts.setSelection(position);
         accounts.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -78,6 +82,9 @@ public class userCards extends AppCompatActivity {
     private void setViewCards(){
         bankCardList= account.getCards();//TOdo make this work
         String[] str = StringU.getCards(bankCardList);
+        if(str.length==0){
+            return;
+        }
         recycAdapter = new myAdapter(str);
         type = 2;
         ((myAdapter) recycAdapter).setType(type);
@@ -101,13 +108,19 @@ public class userCards extends AppCompatActivity {
         if (manager.getBackStackEntryCount()!=0){
             hide();
         }
-        newCardFrame.setVisibility(View.VISIBLE);
-        fragment = new makeAccount();
-        newCardFrame.bringToFront();
-        FragmentTransaction transaction = manager.beginTransaction();
-        Intent intent = new Intent();
-        transaction.replace(R.id.makeTheAccount, fragment);
-        transaction.commit();
+        if (manager.getFragments().isEmpty()){
+            newCardFrame.setVisibility(View.VISIBLE);
+            fragment = new NewCard();
+            newCardFrame.bringToFront();
+            FragmentTransaction transaction = manager.beginTransaction();
+            Intent intent = new Intent();
+            transaction.replace(newCardFrame.getId(), fragment);
+            transaction.commit();
+        }
+        else {
+            hide();
+        }
+
 
     }
 

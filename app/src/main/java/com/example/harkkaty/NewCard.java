@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -18,6 +19,7 @@ public class NewCard extends Fragment {
     private String checkingString, onlineString, cashString, creditString;
     private Spinner spineer;
     private Account account;
+    public Button makeCard;
 
     public NewCard() {
 
@@ -33,19 +35,29 @@ public class NewCard extends Fragment {
         cash = newCardFragView.findViewById(R.id.CashL);
         credit = newCardFragView.findViewById(R.id.Credit);
         spineer = newCardFragView.findViewById(R.id.chooseType);
+        makeCard = newCardFragView.findViewById(R.id.makeNewCard);
+        setButtonListener();
         return newCardFragView;
     }
 
 
+    public void setButtonListener(){
+        makeCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeNewCard();
+            }
+        });
+    }
 
-    public void makeNewCard(View view){
+    public void makeNewCard(){
         checkingString=cheking.getText().toString();
         onlineString= online.getText().toString();
         cashString = cash.getText().toString();
         creditString = credit.getText().toString();
         account.addCard(checkingString, onlineString, cashString, creditString, spineer.getSelectedItem().toString());
         //todo make toast here
-        //((userCards)getActivity()).hide();//todo this doesn't work
+        ((userCards)getActivity()).hide();//todo this doesn't work
     }
 
 }
