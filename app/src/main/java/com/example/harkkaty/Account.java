@@ -27,17 +27,24 @@ public class Account implements Serializable {
         cards=null;
         xml = XML_Utility.getInstance();
         sql = SQLUtility.getSQLUtil(null);
+        stringU = StringUtility.getInstance();
     }
 
 
     //adds event to accounts to accounts events
     public void addEvent(Date time, String theOtherAccount, double amount, String message, String entity){
+        if (event==null){
+            event=new ArrayList<AccountEvents>();
+        }
         accEvent = new AccountEvents();
         accEvent.AccountEvents(time, theOtherAccount, amount, message, entity, getAccountNumber());
+        System.out.println(amount+"heree is the money in the event");//todo remove
         event.add(accEvent);
         sql.addMoney(theOtherAccount, amount);
+        currentBalance=currentBalance-amount;
+        sql.updateMoney(ID, Double.toString(currentBalance));
         sql.addEvent(accEvent);
-        xml.addEvent(time, theOtherAccount, amount, message, entity, ID);//Todo xml things
+        xml.addEvent(time, theOtherAccount, amount, message, entity, ID);
 
     }
 
@@ -62,6 +69,7 @@ public class Account implements Serializable {
     //when accounts are gotten this also gets the realated cards
     private void setCards(){
         cards=sql.getCards(ID);
+
     }
 
     //returns cards
@@ -125,7 +133,7 @@ public class Account implements Serializable {
         BankCard proxy;
         for (int i=0; i<cards.size(); i++){
             proxy = cards.get(i);
-            if(number ==proxy.getNumber()){
+            if(number.equals(proxy.getNumber())){
                 return proxy;
             }
         }
@@ -144,7 +152,26 @@ public class Account implements Serializable {
     //adds a card to the aacount
     public void addCard(String checking, String online, String cash, String credit, String type){
         bc = new BankCard();
-        bc.setBankCard(stringU.makeACardNumber(type), type, Integer.getInteger(online), Integer.getInteger(cash), Integer.getInteger(checking), Integer.getInteger(credit));
+        int creditProxy;
+        if (credit.equals("")){
+            creditProxy =0;
+        }else {
+            creditProxy=Integer.getInteger(credit);
+        }
+
+        System.out.println(checking+online+cash+credit+ type);//todo remove
+        bc.setBankCard(stringU.makeACardNumber(type), type, Integer.parseInt(online), Integer.parseInt(cash), Integer.parseInt(checking), creditProxy, ID);
+        if (cards==null){
+            cards = new ArrayList<BankCard>();
+        }
+
+        sql.addBankcard(bc, "0000", stringU.makeVerification(bc.getNumber()));
+        setCards();
+    }
+
+    //is used to get the event list
+    public ArrayList<AccountEvents> getTheEvents(){
+        return event;
     }
 
 }

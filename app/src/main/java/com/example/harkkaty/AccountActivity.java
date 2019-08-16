@@ -24,13 +24,15 @@ public class AccountActivity extends AppCompatActivity {
     private Account account;
     private FragmentManager manager;
     private Fragment fragment;
-    public FrameLayout makeAccountView;
+    public FrameLayout makeAccountView, allEvents;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter recycAdapter;
     private RecyclerView.LayoutManager recycManager;
     private ArrayList<AccountEvents> events;
     private ArrayList<String> stringList;
     private StringUtility StringU;
+
+    private String proxy;
 
     //position used when moving from activities to where the spinner position is important
     private int position;
@@ -48,13 +50,15 @@ public class AccountActivity extends AppCompatActivity {
         makeAccountView = findViewById(R.id.newAccount);
         makeAccountView.setBackgroundColor(getResources().getColor(R.color.white));
         makeAccountView.setVisibility(View.INVISIBLE);
+        allEvents = findViewById(R.id.AllEvents);
+        allEvents.setBackgroundColor(getResources().getColor(R.color.white));
+        allEvents.setVisibility(View.INVISIBLE);
         StringU = StringUtility.getInstance();
-
         recyclerView = findViewById(R.id.AccountEvents);
         recycManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(recycManager);
-
         makeSpinner();
+        setViewEvents();
     }
 
 
@@ -70,7 +74,6 @@ public class AccountActivity extends AppCompatActivity {
         accounts.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String proxy;
                 proxy= accounts.getSelectedItem().toString();
                 account=user.getSelectedAccount(proxy);
                 setViewEvents();
@@ -89,21 +92,39 @@ public class AccountActivity extends AppCompatActivity {
         if (account ==null){
             return;
         }
-        events= account.setEvents();//TOdo make this work
+        events= account.setEvents();
         if(events==null){
             return;
         }
         String[] str = StringU.getFourEvents(events);
-
-        recycAdapter = new myAdapter(str);
+        recycAdapter = new myAdapter(str, this);
         ((myAdapter) recycAdapter).setType(1);
         recyclerView.setAdapter(recycAdapter);
+
     }
 
 
     //moves to all events fragment, where all past events are shown
     public void showAllEvents(View v){
+        allEvents = findViewById(R.id.AllEvents);
+        allEvents.setVisibility(View.VISIBLE);
+        fragment = new AllEvents_fragment();
+        allEvents.bringToFront();
+        FragmentTransaction transaction = manager.beginTransaction();
+        //next sends the name of the account to the fragment so it can be used to get all the events
+        Bundle bundle = new Bundle();
+        bundle.putString(proxy, "accountInfo");
+        fragment.setArguments(bundle);
+        Intent intent = new Intent();
+        transaction.replace(allEvents.getId(), fragment);
+        transaction.commit();
+    }
 
+    public void leaveEvents(){
+        allEvents.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.detach(fragment);
+        transaction.commit();
     }
 
     //goes to activity where new payments can be made, money can lifted and money added
@@ -137,6 +158,10 @@ public class AccountActivity extends AppCompatActivity {
 
     //goes to bankCard activity but with current account shown first
     public void goToBankCards(View v){
+        if(account==null){
+            //todo toast here
+            return;
+        }
         Intent newIntent= new Intent(AccountActivity.this, userCards.class);
         newIntent.putExtra("spinnerPosition", position);
         this.finish();
@@ -150,5 +175,7 @@ public class AccountActivity extends AppCompatActivity {
         AccountActivity.this.startActivity(newIntent);
 
     }
+
+
 
 }

@@ -122,6 +122,9 @@ public class User {
         }
         acc.setAccount(accountID, proxy, balanceString);
         System.out.println(acc==null);
+        if (accounts==null){
+            accounts= new ArrayList<Account>();
+        }
         accounts.add(acc);
     }
 
@@ -152,5 +155,14 @@ public class User {
             i++;
         }
         return 0;
+    }
+
+    public Account getAccountByNumber(String accountNumber){
+        for (Account acc: accounts){
+            if(accountNumber.equals(acc.getAccountNumber())){
+                return acc;
+            }
+        }
+        return null;
     }
 }

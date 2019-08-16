@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,7 +32,7 @@ public class userCards extends AppCompatActivity {
     private FrameLayout newCardFrame;
     private Fragment fragment;
     private FragmentManager manager;
-
+    private ArrayList<Account> accs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +41,14 @@ public class userCards extends AppCompatActivity {
         user = user.getCurrentUser();
         listU= listU.getListUtility();
         accounts= findViewById(R.id.accountSpinner);
+        recyclerView = findViewById(R.id.cardsRecycler);
         position=getIntent().getIntExtra("spinnePosition", 0);
         StringU = StringUtility.getInstance();
         newCardFrame = findViewById(R.id.makeNewCard);
         newCardFrame.setVisibility(View.INVISIBLE);
         newCardFrame.setBackgroundColor(getResources().getColor(R.color.white));
         manager = getSupportFragmentManager();
+        accs = user.getAccounts();
 
         makeSpinner();
 
@@ -75,6 +78,12 @@ public class userCards extends AppCompatActivity {
 
             }
         });
+        if(accs.size()!=0) {
+            account = accs.get(0);
+            account = user.getSelectedAccount(account.getAccountNumber()+": ");
+            setViewCards();
+        }
+
     }
 
 
@@ -85,19 +94,24 @@ public class userCards extends AppCompatActivity {
         if(str.length==0){
             return;
         }
-        recycAdapter = new myAdapter(str);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        recycAdapter = new myAdapter(str, this);
         type = 2;
         ((myAdapter) recycAdapter).setType(type);
         ((myAdapter) recycAdapter).setContext(this);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(recycAdapter);
+        recyclerView.setLayoutManager(manager);
+
+
     }
 
     // moves to Card info activity
     public void ToCards(String cardnumber){
         Intent newIntent= new Intent(userCards.this, CardInfo.class);
-        cardnumber= StringU.getCardNumber(cardnumber);
-        BankCard proxyCard= account.getACard(cardnumber);
-        newIntent.putExtra("BankCard", proxyCard);
+        newIntent.putExtra("Accountid", account.getAccountNumber());
+        newIntent.putExtra("BankCard", cardnumber);
         this.finish();
         userCards.this.startActivity(newIntent);
     }
@@ -138,5 +152,9 @@ public class userCards extends AppCompatActivity {
         Intent newIntent= new Intent(userCards.this, Home.class);
         this.finish();
         userCards.this.startActivity(newIntent);
+    }
+
+    public Account getAccount(){
+        return account;
     }
 }

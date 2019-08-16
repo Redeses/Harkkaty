@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.Date;
@@ -28,15 +29,18 @@ public class payment extends Fragment {
     private String generalProxy;
 
     private DateC datec;
+    private User user;
 
     //date to be used when the payment event is created
     private Date paymentDate;
+    public Button check;
 
     public payment() {
         DChecker = 0;
         compareInt = 0;
         isBackwards=false;
         DateisOK = false;
+        user= User.getCurrentUser();
     }
 
 
@@ -45,10 +49,18 @@ public class payment extends Fragment {
                              Bundle savedInstanceState) {
         View paymentFragView=inflater.inflate(R.layout.fragment_payment, container, false);
         toAccount = paymentFragView.findViewById(R.id.paymentAccount);
+        datec= DateC.getDatec();
         receiver = paymentFragView.findViewById(R.id.paymentReceiver);
         amount = paymentFragView.findViewById(R.id.paymentAmount);
         message = paymentFragView.findViewById(R.id.paymentMessage);
         date = paymentFragView.findViewById(R.id.paymentDate);
+        check = paymentFragView.findViewById(R.id.paymentN);
+        check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makePayment();
+            }
+        });
         setDatetextListener();
         return paymentFragView;
     }
@@ -60,9 +72,10 @@ public class payment extends Fragment {
 
     //method taht checks if all relevant fields are filled and makes event log of it
     ///also updates the account that the money is sent to with the currency/if it exists
-    public void makePayment(View v){
+    public void makePayment(){
         AccountID = (Account) getArguments().getSerializable("account");
         String proyx=amount.getText().toString();
+        System.out.println(proyx);//todo remove
         if (proyx==""){
 
             return;
@@ -89,6 +102,10 @@ public class payment extends Fragment {
 
         AccountID.addEvent(paymentDate, toAccount.getText().toString(), Double.parseDouble(proyx),
                 message.getText().toString(), receiver.getText().toString());
+        setTextToEmpty();
+        AccountNewActivity activity = (AccountNewActivity) getActivity();
+        activity.setSpinnet(user.getAccountNumberInSpinner(AccountID.getAccountNumber()));
+
 
     }
 
@@ -147,4 +164,11 @@ public class payment extends Fragment {
 
     //todo make method which cahnges the spinner info in main
 
+    private void setTextToEmpty(){
+        toAccount.setText("");
+        receiver.setText("");
+        amount.setText("");
+        message.setText("");
+        date.setText("");
+    }
 }

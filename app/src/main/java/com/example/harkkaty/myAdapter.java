@@ -3,6 +3,7 @@ package com.example.harkkaty;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.MyVIewHolder> {
     private Activity acti;
     private Context cont;
     private String cardNumber;
+    private LayoutInflater theInflater;
 
     private TextView textV;
     //sets the type of info beng used in the adapter 1 = its events and 2= bankcards
@@ -43,25 +45,26 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.MyVIewHolder> {
 
     public static class MyVIewHolder extends RecyclerView.ViewHolder{
         public View textView;
+        TextView theTextView;
 
         public MyVIewHolder (View v){
             super(v);
             textView = v;
+            theTextView = v.findViewById(R.id.Recyc);
         }
     }
 
-    public myAdapter(String[] recycData){
-        recycSrings = recycData;
+    public myAdapter(String[] recycData, Context context){
+        this.theInflater = LayoutInflater.from(context);
+        this.recycSrings = recycData;
     }
 
     @Override
-    public myAdapter.MyVIewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.eventrecyc, parent, false);
+    public MyVIewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+        v = theInflater.inflate(R.layout.eventrecyc, parent, false);
         linearL = v.findViewById(R.id.touch);
         textV = v.findViewById(R.id.Recyc);
-
-        MyVIewHolder vh = new MyVIewHolder(v);
-        return vh;
+        return new MyVIewHolder(v);
     }
 
     @Override
@@ -71,7 +74,8 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.MyVIewHolder> {
             setClickListener();
         }
         String input = recycSrings[position];
-        holder.itemView.findViewById(R.id.Recyc);
+        textV = v.findViewById(R.id.Recyc);
+        holder.theTextView.setText(input);
     }
 
     @Override

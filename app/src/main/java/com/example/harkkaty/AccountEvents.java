@@ -22,6 +22,8 @@ public class AccountEvents {
         Entity="";
         eventID="";
         accountID="";
+        datec = DateC.getDatec();
+        stringU = StringUtility.getInstance();
     }
 
     //set accont event
@@ -34,10 +36,6 @@ public class AccountEvents {
         eventID=stringU.makeACardNumber(Raccount);
         accountID =id;
 
-    }
-
-    private void setDate(){
-        //DateC.currentDate();
     }
 
     public Date getEventDate(){return eventDate;}

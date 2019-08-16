@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class SQLUtility extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME ="Bankf.db";
+    public static final String DATABASE_NAME ="TheBigBank.db";
     //bank table Strings
     public static final String Table1_name= "Bank";
     public static final String BankCol1= "BankID";
@@ -67,9 +67,11 @@ public class SQLUtility extends SQLiteOpenHelper {
     public static final String EventCol1="EventID";
     public static final String EventCol2="AccountID";
     public static final String EventCol3="date";
-    public static final String EventCol4="receiving";
+    public static final String EventCol4="receiver";
     public static final String EventCol5="message";
     public static final String EventCol6="amount";
+    public static final String EventCol7="OtherAccount";
+
 
     private SQLiteDatabase sqlProxy;
     private static SQLUtility sqlU;
@@ -162,7 +164,7 @@ public class SQLUtility extends SQLiteOpenHelper {
                 BankCardCol7+" INTEGER DEFAULT -1, "+
                 BankCardCol8+" INTEGER DEFAULT 0," +
                 BankCardCol9+" varchar(25), " +
-                "CHECK (credit<0)," +
+                "CHECK (credit>-1)," +
                 "FOREIGN KEY ("+BankCardCol9+") REFERENCES "+Table3_name+"("+AccountCol1+"))");
     }
 
@@ -175,7 +177,7 @@ public class SQLUtility extends SQLiteOpenHelper {
     private void createEventTable(SQLiteDatabase db){
         db.execSQL("CREATE TABLE "+ Table7_name +"("+EventCol1 +" varchar(25) PRIMARY KEY NOT NULL,"
         + EventCol2+" varchar(25),"+ EventCol3+" varchar(30)," + EventCol4+" varchar(25),"+EventCol5+" varchar(25)," +
-                EventCol6 + " varchar(30),"+
+                EventCol6 + " varchar(30),"+ EventCol7+ " varcahr(30)," +
                 "FOREIGN KEY("+EventCol2+") REFERENCES "+ Table3_name+"("+ AccountCol1+"))");
     }
 
@@ -284,7 +286,6 @@ public class SQLUtility extends SQLiteOpenHelper {
             contentValues.put(BankCardCol7, bankCard.getCheckingLimit());
             contentValues.put(BankCardCol8, bankCard.getCredit());
             contentValues.put(BankCardCol9, bankCard.getAccount());
-
             db.insert(Table5_name, null, contentValues);
             db.close();
 
@@ -294,14 +295,6 @@ public class SQLUtility extends SQLiteOpenHelper {
 
         }
     }
-
-
-    //returns list of events to Account that can be used later. Gets them with account foriegn key
-   /* public ArrayList<AccountEvents> getEvents(String id){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(, id);
-    }*/
 
     //todo
     public void addUserToBank(String id){
@@ -319,6 +312,8 @@ public class SQLUtility extends SQLiteOpenHelper {
         contentValues.put(EventCol3, accEvent.getDateString());
         contentValues.put(EventCol4, accEvent.getEntity());
         contentValues.put(EventCol5, accEvent.getmessage());
+        contentValues.put(EventCol6, accEvent.getAmount());
+        contentValues.put(EventCol7, accEvent.getReceivingAccount());
         db.insert(Table7_name, null, contentValues);
         db.close();
     }
@@ -386,8 +381,10 @@ public class SQLUtility extends SQLiteOpenHelper {
             int savings;
 
             SQLiteDatabase db = this.getWritableDatabase();
+            System.out.println(Table5_name+" "+ accountID);
             Cursor cursor = db.rawQuery("SELECT * FROM "+Table5_name+" WHERE "+BankCardCol9+" = '"+accountID+"'", null);
             if(cursor.getCount()==0) {
+                System.out.print("here is the issue");//todo remove
                 return null;
             }
             cursor.moveToFirst();
@@ -399,7 +396,7 @@ public class SQLUtility extends SQLiteOpenHelper {
                 cashL = cursor.getInt(cursor.getColumnIndex(BankCardCol1));
                 checkingL = cursor.getInt(cursor.getColumnIndex(BankCardCol1));
                 credit = cursor.getInt(cursor.getColumnIndex(BankCardCol1));
-                Bacc.setBankCard(cardNumber, type, onlineL, cashL, checkingL, credit);
+                Bacc.setBankCard(cardNumber, type, onlineL, cashL, checkingL, credit, accountID);
                 bankCardList.add(Bacc);
                 cursor.moveToNext();
             }
@@ -452,16 +449,27 @@ public class SQLUtility extends SQLiteOpenHelper {
     public void updateUserInfo(String country, String address, String email, String phoneN, String id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        String where= CustomerCol1+" = "+ id;
+        String where= CustomerCol1+" ='"+ id+"'";
+        System.out.println(id);
         cv.put(CustomerCol6, country);
         cv.put(CustomerCol4, address);
         cv.put(CustomerCol5, email);
         cv.put(CustomerCol7,  phoneN);
         db.update(Table2_name, cv, where, null);
+        db.needUpgrade(2);
         db.close();
 
     }
-
+    /*
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues cv = new ContentValues();
+    String where= AccountCol1+" ='"+ accountID+"'";
+    String [] proxy = new String[] {accountID};
+        cv.put(AccountCol3, amount);
+        db.update(Table3_name, cv, where, null);
+        db.needUpgrade(2);
+        db.close();
+*/
     //check with user id if the password matches
     public boolean checkPassword(String ID, String password){
         try{
@@ -485,10 +493,11 @@ public class SQLUtility extends SQLiteOpenHelper {
     public void updatePassword(String ID, String password){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        String where= LogInCol3+" = "+ ID;
-        String [] proxy = new String[] {ID};
+        String where= LogInCol3+" = '"+ ID+"'";
+        //String [] proxy = new String[] {ID};
         cv.put(LogInCol2, password);
-        db.update(Table6_name, cv, where, proxy);
+        db.update(Table6_name, cv, where, null);
+        db.needUpgrade(2);
         db.close();
     }
 
@@ -497,10 +506,11 @@ public class SQLUtility extends SQLiteOpenHelper {
     public void updateMoney(String accountID, String amount){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        String where= Table3_name+" = ?";
+        String where= AccountCol1+" ='"+ accountID+"'";
         String [] proxy = new String[] {accountID};
         cv.put(AccountCol3, amount);
-        db.update(Table2_name, cv, where, proxy);
+        db.update(Table3_name, cv, where, null);
+        db.needUpgrade(2);
         db.close();
     }
 
@@ -529,22 +539,30 @@ public class SQLUtility extends SQLiteOpenHelper {
     public ArrayList<AccountEvents> getEvents(String number){
         String date, Raccount, amount, message, entity, id;
         Date thedate;
+        String DoubleProxy;
+        double doubleProxy;
         SQLiteDatabase db = getReadableDatabase();
         AccountEvents accevent;
-        ArrayList<AccountEvents> events=null;
+        ArrayList<AccountEvents> events=new ArrayList<AccountEvents>();
         Cursor cursor = db.rawQuery("SELECT * FROM "+Table7_name+" WHERE "+EventCol2+" = '"+number+"'", null);
         cursor.moveToFirst();
         for (int i=0; i<cursor.getCount(); i++){
             accevent= new AccountEvents();
             date= cursor.getString(cursor.getColumnIndex(EventCol3));
             thedate = datec.makeIntoDate(date);
-            Raccount = number;
+            Raccount = cursor.getString(cursor.getColumnIndex(EventCol7));
             amount = cursor.getString(cursor.getColumnIndex(EventCol6));
             message=cursor.getString(cursor.getColumnIndex(EventCol5));
             entity = cursor.getString(cursor.getColumnIndex(EventCol4));
-            id = cursor.getString(cursor.getColumnIndex(EventCol1));
-            accevent.AccountEvents(thedate, Raccount, Double.parseDouble(amount), message, entity, id);
+            id = cursor.getString(cursor.getColumnIndex(EventCol2));
+            if(amount==null){
+                doubleProxy=0;
+            }else{
+                doubleProxy=Double.parseDouble(amount);
+            }
+            accevent.AccountEvents(thedate, Raccount, doubleProxy, message, entity, id);
             events.add(accevent);
+            cursor.moveToNext();
         }
         return events;
     }

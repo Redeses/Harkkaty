@@ -11,7 +11,9 @@ public class CardInfo extends AppCompatActivity {
     private EditText ChekcingL, CashL, WebL;
     private TextView tv;
     private BankCard bc;
+    private String bankcard, account;
     private Account acc;
+    private User user;
 
     private String proxyString;
     private int proxyInt;
@@ -21,8 +23,11 @@ public class CardInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_info);
         Intent intent;
-        bc = (BankCard) getIntent().getSerializableExtra("BankCard");
-        acc = (Account) getIntent().getSerializableExtra("account");
+        user = User.getCurrentUser();
+        bankcard = (String) getIntent().getStringExtra("BankCard");
+        account = (String) getIntent().getStringExtra("Accountid");
+        acc = user.getAccountByNumber(account);
+        bc = acc.getACard(bankcard);
         ChekcingL = findViewById(R.id.chekinglimit);
         CashL = findViewById(R.id.cashLimit);
         WebL = findViewById(R.id.webL);

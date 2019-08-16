@@ -30,7 +30,7 @@ public class DateC {
     public String getSimpleDate(Date theDate){
         String simpleDate="";
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        simpleDate = dateFormat.format(simpleDate);
+        simpleDate = dateFormat.format(theDate);
         return simpleDate;
     }
 

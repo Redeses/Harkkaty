@@ -10,8 +10,8 @@
 
     <TextView
         android:id="@+id/Recyc"
-        android:layout_width="376dp"
-        android:layout_height="89dp"
-        android:textSize="24sp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp" />
 
 </LinearLayout>

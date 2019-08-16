@@ -26,18 +26,20 @@ public class BankCard implements Serializable {
         checkingLimit=-1;
         credit =0;//no credit
         account = "";
+        sql = SQLUtility.getSQLUtil(null);
+        stringU = StringUtility.getInstance();
     }
 
 
     //sets the current instance of the bankcard
-    public void setBankCard(String cardN, String type, int onlineLimit, int cashLimit, int checkingLimit, int credit){
+    public void setBankCard(String cardN, String type, int onlineLimit, int cashLimit, int checkingLimit, int credit, String accountID){
         cardNumber=cardN;
         this.type=type;
         this.onlineLimit=onlineLimit;
         this.cashLimit = cashLimit;
         this.checkingLimit = checkingLimit;
         this.credit = credit;
-        sql.addBankcard(this, "0000", stringU.makeVerification(cardN));
+        this.account = accountID;
     }
 
     public String getNumber(){

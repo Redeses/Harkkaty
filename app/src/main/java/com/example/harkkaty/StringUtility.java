@@ -106,14 +106,21 @@ public class StringUtility {
     public String[] getFourEvents(ArrayList<AccountEvents> arrayAE){
         String[] str4= new String[4];
         String proxy;
+        int uplimit;
         AccountEvents proxyEvent;
-        for(int i= 0; i<4; i++){
+        if(arrayAE.size()<4){
+            uplimit=arrayAE.size();
+        }else{
+            uplimit=4;
+        }
+        for(int i= 0; i<uplimit; i++){
             proxyEvent = arrayAE.get(i);
-            proxy= proxyEvent.getReceivingAccount()+"   " + dateU.getSimpleDate(proxyEvent.getEventDate()) + "  "+ Double.toString(proxyEvent.getAmount());
+            proxy= proxyEvent.getReceivingAccount()+"   " + dateU.getSimpleDate(proxyEvent.getEventDate()) + "  "+ proxyEvent.getAmount();
             str4[i] = proxy;
         }
         return str4;
     }
+
 
     //method used for getting cards from account into a string list
     public String[] getCards(ArrayList<BankCard> arrayCards){
@@ -144,6 +151,7 @@ public class StringUtility {
         String proxy;
         String[] proxyList = cardString.split(" ");
         proxy = proxyList[0];
+        System.out.println(proxy);//todo remove
         return proxy;
     }
 
@@ -171,4 +179,7 @@ public class StringUtility {
         proxy=proxy.substring(0, proxy.length()-1);
         return proxy;
     }
+
+
+    //following methods are being used in Allevents fragment to make a events string
 }

@@ -35,7 +35,7 @@ public class NewCard extends Fragment {
         cash = newCardFragView.findViewById(R.id.CashL);
         credit = newCardFragView.findViewById(R.id.Credit);
         spineer = newCardFragView.findViewById(R.id.chooseType);
-        makeCard = newCardFragView.findViewById(R.id.makeNewCard);
+        makeCard = newCardFragView.findViewById(R.id.makeCard);
         setButtonListener();
         return newCardFragView;
     }
@@ -55,9 +55,25 @@ public class NewCard extends Fragment {
         onlineString= online.getText().toString();
         cashString = cash.getText().toString();
         creditString = credit.getText().toString();
+        userCards activity = (userCards) getActivity();
+        account=activity.getAccount();
+        checkStrings();
         account.addCard(checkingString, onlineString, cashString, creditString, spineer.getSelectedItem().toString());
         //todo make toast here
         ((userCards)getActivity()).hide();//todo this doesn't work
+    }
+
+    //checks if the given values for limits are filled and if not they give the default -1
+    private void checkStrings(){
+        if(checkingString.equals("")){
+            checkingString="-1";
+        }
+        if (onlineString.equals("")){
+            onlineString="-1";
+        }
+        if (cashString.equals("")){
+            cashString="-1";
+        }
     }
 
 }
