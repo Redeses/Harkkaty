@@ -106,17 +106,20 @@ public class StringUtility {
     public String[] getFourEvents(ArrayList<AccountEvents> arrayAE){
         String[] str4= new String[4];
         String proxy;
-        int uplimit;
+        int uplimit, lowerlimit, proxyInt;
         AccountEvents proxyEvent;
+        uplimit=arrayAE.size();
         if(arrayAE.size()<4){
-            uplimit=arrayAE.size();
+            lowerlimit=0;
         }else{
-            uplimit=4;
+            lowerlimit=uplimit-4;
         }
-        for(int i= 0; i<uplimit; i++){
+        proxyInt=0;
+        for(int i= lowerlimit; i<uplimit; i++){
             proxyEvent = arrayAE.get(i);
             proxy= proxyEvent.getReceivingAccount()+"   " + dateU.getSimpleDate(proxyEvent.getEventDate()) + "  "+ proxyEvent.getAmount();
-            str4[i] = proxy;
+            str4[proxyInt] = proxy;
+            proxyInt++;
         }
         return str4;
     }
@@ -151,7 +154,6 @@ public class StringUtility {
         String proxy;
         String[] proxyList = cardString.split(" ");
         proxy = proxyList[0];
-        System.out.println(proxy);//todo remove
         return proxy;
     }
 

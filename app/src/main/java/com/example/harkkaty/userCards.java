@@ -86,10 +86,8 @@ public class userCards extends AppCompatActivity {
 
     }
 
-
-    // todo method which the recyclerView for cards
     private void setViewCards(){
-        bankCardList= account.getCards();//TOdo make this work
+        bankCardList= account.getCards();
         String[] str = StringU.getCards(bankCardList);
         if(str.length==0){
             return;

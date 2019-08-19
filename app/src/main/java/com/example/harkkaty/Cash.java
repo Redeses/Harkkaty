@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 public class Cash extends Fragment {
@@ -18,7 +19,7 @@ public class Cash extends Fragment {
     private Spinner type, card;
     private String typeString, cardString;
     private String[] str;
-
+    private User user;
     //button used for hiding payment
     private Button makePayment;
 
@@ -30,6 +31,7 @@ public class Cash extends Fragment {
     public Cash() {
         listU = listU.getListUtility();
         date = date.getDatec();
+        user = User.getCurrentUser();
     }
 
 
@@ -66,6 +68,12 @@ public class Cash extends Fragment {
 
             }
         });
+        makePayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makePayment();
+            }
+        });
     }
 
 
@@ -78,6 +86,7 @@ public class Cash extends Fragment {
         }
         str= listU.MakeCardList(proxyAccount);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, str);
+        card.setAdapter(adapter);
         card.setSelection(0);
         card.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -93,11 +102,11 @@ public class Cash extends Fragment {
     }
 
     //makes payment and and event
-    public void makePayment(View view){
+    public void makePayment(){
         String proxy=cashAmount.getText().toString();
         typeString = type.getSelectedItem().toString();
         if (proxy==""){
-            //todo make toast here
+            Toast.makeText(getActivity(), "No money amout given", Toast.LENGTH_LONG).show();
             return;
         }
         double money = Double.parseDouble(proxy);
@@ -105,9 +114,13 @@ public class Cash extends Fragment {
             //toast here
             return;
         }
-        proxyAccount.removeMoney(money);
 
-        proxyAccount.addEvent(date.currentDate(), "thisAccount", money, "", typeString);
+        Account AccountID = (Account) getArguments().getSerializable("account");
+        proxyAccount.removeMoney(money);
+        AccountNewActivity activity = (AccountNewActivity) getActivity();
+        activity.setSpinnet(user.getAccountNumberInSpinner(AccountID.getAccountNumber()));
+        String message = typeString+" transaction made from the card number: "+ cardString;
+        proxyAccount.addEvent(date.currentDate(), typeString, money, message, typeString);
 
     }
 

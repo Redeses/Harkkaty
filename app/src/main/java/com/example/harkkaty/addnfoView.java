@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 public class addnfoView extends Fragment{
@@ -99,8 +100,7 @@ public class addnfoView extends Fragment{
                 PersonUtil.AddAllToList(firstNameProxy, lastNameProxy, phoneProxy, addressProxy);
                 canSend=PersonUtil.checkInfo();
                 if (canSend==false){
-                    //TODO Toast method here here
-                    //TODO make a method for telling which fields are not filled in
+                    Toast.makeText(getActivity(), "Not every field is filled in", Toast.LENGTH_LONG).show();
                     redColorSetter();
                     return;
                 }
@@ -154,7 +154,7 @@ public class addnfoView extends Fragment{
                     isBackwards=true;
                 }else{
                     isBackwards=false;
-                }//Todo finish making the date changer
+                }
                 bDSChecker = birthDate.getText().toString().length();
 
                 if ((bDSChecker ==2)&&(isBackwards==false)){

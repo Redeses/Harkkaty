@@ -231,7 +231,6 @@ public class SQLUtility extends SQLiteOpenHelper {
         }
     }
 
-    //todo add functionality to this since EVERYTHING has to be save to a database
     //add infromation of the new user to Customer table
     public void addInformation(String ID, String firstName, String lastName, String birthDate
             , String country, String address, String email, String phoneNumber){
@@ -296,13 +295,12 @@ public class SQLUtility extends SQLiteOpenHelper {
         }
     }
 
-    //todo
+
     public void addUserToBank(String id){
 
     }
 
 
-    //todo do this
     public void addEvent(AccountEvents accEvent){
         String proxy="";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -319,7 +317,6 @@ public class SQLUtility extends SQLiteOpenHelper {
     }
 
 
-    //todo next here
     public void updateLimits(BankCard bankCard){
         String onlineLimit, cashLimit, checkingLimit, credit;
         onlineLimit = Double.toString(bankCard.getOnlineLimit());
@@ -328,7 +325,7 @@ public class SQLUtility extends SQLiteOpenHelper {
         credit = Double.toString(bankCard.getCredit());
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        String where= Table5_name+" = ?";
+        String where= BankCardCol1+" = ?";
         String [] proxy = new String[] {bankCard.getNumber()};
         cv.put(BankCardCol5, onlineLimit);
         cv.put(BankCardCol6, cashLimit);
@@ -384,7 +381,6 @@ public class SQLUtility extends SQLiteOpenHelper {
             System.out.println(Table5_name+" "+ accountID);
             Cursor cursor = db.rawQuery("SELECT * FROM "+Table5_name+" WHERE "+BankCardCol9+" = '"+accountID+"'", null);
             if(cursor.getCount()==0) {
-                System.out.print("here is the issue");//todo remove
                 return null;
             }
             cursor.moveToFirst();
@@ -501,7 +497,6 @@ public class SQLUtility extends SQLiteOpenHelper {
         db.close();
     }
 
-    //todo make happen cap'n
     //this is used when crrent accounts money is manipulated
     public void updateMoney(String accountID, String amount){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -534,7 +529,6 @@ public class SQLUtility extends SQLiteOpenHelper {
         db.close();
     }
 
-        //todo continue
     //Date date, String Raccount, double Amount, String message, String entity, String id
     public ArrayList<AccountEvents> getEvents(String number){
         String date, Raccount, amount, message, entity, id;
@@ -567,7 +561,6 @@ public class SQLUtility extends SQLiteOpenHelper {
         return events;
     }
 
-    //todo this
     //Date date, String Raccount, double Amount, String message, String entity, String id
     public void addEvent(Date date, String Raccount, double Amount, String message, String Entity, String id){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -581,6 +574,13 @@ public class SQLUtility extends SQLiteOpenHelper {
         cv.put(EventCol5, message);
         db.update(Table7_name, cv, where, proxy);
         db.close();
+    }
+
+    public void removeCard(BankCard card){
+        Cursor cursor;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String where = BankCardCol1 +" = "+ card.getNumber();
+        db.delete(Table5_name, where, null);
     }
 
 }

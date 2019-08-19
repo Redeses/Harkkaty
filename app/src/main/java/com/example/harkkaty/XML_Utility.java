@@ -69,7 +69,7 @@ public class XML_Utility {
             Amount = Double.toString(amount);
             Document document=null;
             db = dbf.newDocumentBuilder();
-            file = new File(filepath);//todo check this out
+            file = new File(filepath);
 
             if(file.createNewFile()){
                 document = db.parse(file);

@@ -81,7 +81,6 @@ public class User {
 
     }
 
-    //Todo make this method work so you will get current info here when you sign in
     public void addCurrentUser(String id){
         infoList=sql.getProfileInfo(id);
         setCurrentUser();
@@ -137,7 +136,6 @@ public class User {
         id = str[0];
         for (int i = 0; i<accounts.size() ; i++){
             proxyAccount=accounts.get(i);
-            System.out.println(id);
             if (proxyAccount.getAccountNumber().equals(id)){
                 return proxyAccount;
             }

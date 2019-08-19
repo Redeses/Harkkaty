@@ -18,14 +18,13 @@ public class DateC {
     }
 
     //method which returns current tiem/date
-    //todo make method
+
     public Date currentDate() {
         date = new Date();
         return date;
     }
 
 
-    //todo make to work
     //returns a day.month.year String of the given date
     public String getSimpleDate(Date theDate){
         String simpleDate="";

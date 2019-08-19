@@ -27,7 +27,6 @@ public class UserUtility {
         sqlU.addUserToBank(ID);
     }
 
-    //todo make this method
     //this method changes certain info in the user xml file
     public void changeUserInfo(){
 

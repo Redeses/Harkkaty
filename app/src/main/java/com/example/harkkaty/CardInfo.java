@@ -38,6 +38,9 @@ public class CardInfo extends AppCompatActivity {
     //sets all the infos of the activity
     private void setValues(){
         proxyString="";
+        if(bc==null){
+            back();
+        }
         proxyString = bc.getNumber();
         tv.setText(proxyString);
 
@@ -70,6 +73,9 @@ public class CardInfo extends AppCompatActivity {
     //is used for updating all the limits
     public void updateLimits(View v){
         proxyString = ChekcingL.getText().toString();
+        if(proxyString.equals("")){
+            proxyString="-1";
+        }
         proxyInt = Integer.parseInt(proxyString);
         if (proxyInt<0){
             proxyInt=-1;
@@ -77,6 +83,9 @@ public class CardInfo extends AppCompatActivity {
         bc.setCheckingLimit(proxyInt);
 
         proxyString = CashL.getText().toString();
+        if(proxyString.equals("")){
+            proxyString="-1";
+        }
         proxyInt = Integer.parseInt(proxyString);
         if (proxyInt<0){
             proxyInt=-1;
@@ -84,15 +93,17 @@ public class CardInfo extends AppCompatActivity {
         bc.setCashLimit(proxyInt);
 
         proxyString = WebL.getText().toString();
+        if(proxyString.equals("")){
+            proxyString="-1";
+        }
         proxyInt = Integer.parseInt(proxyString);
         if (proxyInt<0){
             proxyInt=-1;
         }
         bc.setOnlineLimit(proxyInt);
+        bc.setCredit(0);
+
         bc.updateSQL();
-
-        //todo credit thing
-
         setValues();
     }
 
@@ -107,6 +118,12 @@ public class CardInfo extends AppCompatActivity {
 
     //goes to the previous place in the UI chain which is userCards
     public void back(View v){
+        Intent newIntent= new Intent(CardInfo.this, userCards.class);
+        this.finish();
+        CardInfo.this.startActivity(newIntent);
+    }
+
+    public void back(){
         Intent newIntent= new Intent(CardInfo.this, userCards.class);
         this.finish();
         CardInfo.this.startActivity(newIntent);

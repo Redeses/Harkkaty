@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-//TODO   DOOOOOOOOOOOOOOOOOOO THIIIIIIIIIIIIIIIIIIIIIIIIIIS
 public class myAdapter extends RecyclerView.Adapter<myAdapter.MyVIewHolder> {
     private String[] recycSrings;
     private int type;

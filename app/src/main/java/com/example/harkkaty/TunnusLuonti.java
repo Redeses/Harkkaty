@@ -70,7 +70,6 @@ public class TunnusLuonti extends Fragment {
             public void onClick(View v) {
 
                 if (userName==""){
-                    //TODO highlight function add
                     Toast.makeText(getContext(), "Add username", Toast.LENGTH_LONG).show();
                     return;
                 }else if(password.getText().toString()==""){
@@ -86,16 +85,13 @@ public class TunnusLuonti extends Fragment {
         if(password.getText().toString().equals(repassword.getText().toString())){
             passwords=password.getText().toString();
         }else{
-            //Todo show user that password is not the same, use also passwor utility to see if paswords is up to standards
-            //todo toast
-            //todo highlight
             return;
         }
         //checks if username already exists
         if(sql.checkIfExists(userName)==true){
             userName=User.getText().toString();
         }else{
-            //todo tell user username already taken so a Toast and a highlight
+            Toast.makeText(getActivity(), "Username already taken", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -105,7 +101,6 @@ public class TunnusLuonti extends Fragment {
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.detach(TunnusLuonti.this);
-        //todo figure out what the hell happende to the next 2 lines
         Fragment adInfo = manager.findFragmentByTag("addnfoView");
         //transaction.detach(adInfo);
         transaction.commit();

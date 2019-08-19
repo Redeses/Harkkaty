@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class AddMoney extends Fragment {
@@ -55,7 +56,7 @@ public class AddMoney extends Fragment {
     public void addTheMoney(){
         String proxy = moneyAmount.getText().toString();
         if (proxy==""){
-            //todo toast text here
+            Toast.makeText(this.getActivity(), "No money amount given", Toast.LENGTH_LONG).show();
             return;
         }
         acc.addMoney(Double.parseDouble(proxy));

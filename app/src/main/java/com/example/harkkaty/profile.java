@@ -79,7 +79,6 @@ public class profile extends Fragment {
         });
     }
 
-    //todo make a method that adds all the info to be used in profile
     public void getInfo(){
         us=us.getCurrentUser();
         Intent intent = new Intent();
@@ -88,7 +87,6 @@ public class profile extends Fragment {
 
         //the order the info lists info is name(full), birthdate, country, address, email, phonenumber
         allnfolist=us.getAllInfo();
-        System.out.println(allnfolist);//todo remove
         name.setText(allnfolist.get(0));
         birthdate.setText(allnfolist.get(1));
         String proxy;

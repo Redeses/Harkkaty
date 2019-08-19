@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 
 public class password extends Fragment {
@@ -70,10 +70,10 @@ public class password extends Fragment {
         if (checkTexts()==false){
             return;
         }else if(!newPassword.getText().toString().equals(ReNewPassword.getText().toString())){
-            //todo toast here
+            Toast.makeText(getActivity(), "New passwords have to match", Toast.LENGTH_LONG).show();
             return;
         }else if(sql.checkPassword(ID, newPassword.toString().toString())){
-            //todo toast here
+            Toast.makeText(getActivity(), "New password can't be old password", Toast.LENGTH_LONG).show();
             return;
         }
         //updates the password in SQLutility class

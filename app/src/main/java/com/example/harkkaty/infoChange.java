@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -84,7 +85,7 @@ public class infoChange extends Fragment {
 
     public void finishInfo(){
         if(checkTexts()==false){
-            //todo toast here and highlights
+            Toast.makeText(getActivity(), "Fill in the missing fields", Toast.LENGTH_LONG).show();
             return;
         }else{
             updateList();
@@ -118,7 +119,6 @@ public class infoChange extends Fragment {
         name.setText(proxy);
         birthdate.setText(infoList.get(1));
         spinnerSring = infoList.get(2);
-        spinnerPositionFinder();
         countrySpinner.setSelection(spinnerPoint);
         address.setText(infoList.get(3));
         email.setText(infoList.get(4));
@@ -127,10 +127,7 @@ public class infoChange extends Fragment {
 
     }
 
-    //todo make the finder
-    private void spinnerPositionFinder(){
 
-    }
 
     private void setSpinner(){
         countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -154,23 +151,23 @@ public class infoChange extends Fragment {
     private boolean checkTexts(){
         boolean textCheck = true;
         if(address.getText().toString().length()==0){
-            //todo infrom user of which is empty
+            Toast.makeText(getActivity(), "address field is empty", Toast.LENGTH_LONG).show();
             textCheck=false;
         }
         if(email.getText().toString().length()==0){
-            //todo infrom user of which is empty
+            Toast.makeText(getActivity(), "Email field is empty", Toast.LENGTH_LONG).show();
             textCheck=false;
         }
         if (StringU.checkforAtSign(email.getText().toString())==false){
-            //todo infrom user of which is empty
+            Toast.makeText(getActivity(), "Email field is empty", Toast.LENGTH_LONG).show();
             textCheck=false;
         }
         if(countrySpinner.getSelectedItem()=="None"){
-            //todo infrom user of which is empty
+            Toast.makeText(getActivity(), "No country selected", Toast.LENGTH_LONG).show();
             textCheck=false;
         }
         if(phone.getText().toString().length()==0){
-            //todo infrom user of which is empty
+            Toast.makeText(getActivity(), "Phone field empty", Toast.LENGTH_LONG).show();
             textCheck=false;
         }
         return textCheck;

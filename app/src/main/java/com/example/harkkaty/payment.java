@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -75,17 +76,16 @@ public class payment extends Fragment {
     public void makePayment(){
         AccountID = (Account) getArguments().getSerializable("account");
         String proyx=amount.getText().toString();
-        System.out.println(proyx);//todo remove
         if (proyx==""){
 
             return;
         }
         if (Double.parseDouble(proyx)<0){
-            //todo toast here
+            Toast.makeText(getActivity(), "Amount given can't be less than zero", Toast.LENGTH_LONG).show();
             return;
         }//checks if account has enough money to make transaction
         else if (Double.parseDouble(proyx)> AccountID.getBalance()){
-            //todo toast here
+            Toast.makeText(getActivity(), "Not enough money", Toast.LENGTH_LONG).show();
             return;
         }
         else if (toAccount.getText()==null){
@@ -129,7 +129,7 @@ public class payment extends Fragment {
                     isBackwards=true;
                 }else{
                     isBackwards=false;
-                }//Todo finish making the date changer
+                }
                 DChecker = date.getText().toString().length();
                 System.out.println(DChecker+ " "+isBackwards);
 
@@ -162,7 +162,6 @@ public class payment extends Fragment {
         });
     }
 
-    //todo make method which cahnges the spinner info in main
 
     private void setTextToEmpty(){
         toAccount.setText("");

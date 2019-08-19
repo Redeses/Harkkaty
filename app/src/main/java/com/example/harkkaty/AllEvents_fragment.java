@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 
 public class AllEvents_fragment extends Fragment {
-    Button next, previous;
+    Button next, previous, leave;
     TextView Events;
     private StringUtility stringU;
     private ArrayList<AccountEvents> accEvents;
@@ -34,6 +34,7 @@ public class AllEvents_fragment extends Fragment {
         range =0;
         eventString="";
         dateU=DateC.getDatec();
+        user = User.getCurrentUser();
     }
 
 
@@ -41,14 +42,19 @@ public class AllEvents_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View eventFragView =inflater.inflate(R.layout.fragment_all_events_fragment, container, false);
-        Events = eventFragView.findViewById(R.id.AllEvents);
+        Events = eventFragView.findViewById(R.id.Allevents);
         next = eventFragView.findViewById(R.id.nextTab);
         previous = eventFragView.findViewById(R.id.previousTab);
-        accountI=getArguments().getString("accountInfo");
+        leave = eventFragView.findViewById(R.id.leave);
+
+        lowerLimit=0;
+        Bundle bundle =getArguments();
+        accountI=bundle.getString("accountInfo");
         account = user.getSelectedAccount(accountI);
         accEvents = account.getTheEvents();
         //accsize is the constant size of the events arraylist
         accSize = accEvents.size();
+        getRange();
         // proxy is the the int chekcing how many events are still left
         proxy = accEvents.size();
         user = User.getCurrentUser();
@@ -65,7 +71,12 @@ public class AllEvents_fragment extends Fragment {
                 nextPage();
             }
         });
-
+        leave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((AccountActivity)getActivity()).leaveEvents();
+            }
+        });
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,13 +87,14 @@ public class AllEvents_fragment extends Fragment {
 
     private void setTextView(){
         getRange();
-        lowerLimit=0;
+        eventString="";
         for(int i=lowerLimit; i<range; i++){
             accevent = accEvents.get(i);
-            eventString=accevent.getDateString() + " "+ accevent.getReceivingAccount()+" "+ accevent.getAmount()
-            +" "+ accevent.getEntity()+ " "+ accevent.getmessage();
+            eventString=eventString+accevent.getDateString() + " "+ accevent.getReceivingAccount()+" "+ accevent.getAmount()
+            +" "+ accevent.getEntity()+ " "+ accevent.getmessage()+"\n";
         }
         Events.setText(eventString);
+
     }
 
     private void nextPage(){

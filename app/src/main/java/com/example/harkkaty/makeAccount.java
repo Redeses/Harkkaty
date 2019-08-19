@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
+import android.widget.Toast;
 
 
 public class makeAccount extends Fragment {
@@ -47,13 +47,12 @@ public class makeAccount extends Fragment {
             saving = true;
          }
         if (balance.getText().toString().equals("")) {
-            //todo toast here, that does not conflict with the previous
+            Toast.makeText(getActivity(), "No money available", Toast.LENGTH_LONG).show();
             return;
         }
         user.addAccount(saving, balance.getText().toString());
         user.setAccounts();
-
-        //todo toast for showing that the account was succesfully done
+        Toast.makeText(getActivity(), "Account made", Toast.LENGTH_LONG).show();
         balance.setText("");
     }
 

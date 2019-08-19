@@ -38,7 +38,6 @@ public class Account implements Serializable {
         }
         accEvent = new AccountEvents();
         accEvent.AccountEvents(time, theOtherAccount, amount, message, entity, getAccountNumber());
-        System.out.println(amount+"heree is the money in the event");//todo remove
         event.add(accEvent);
         sql.addMoney(theOtherAccount, amount);
         currentBalance=currentBalance-amount;
@@ -78,23 +77,18 @@ public class Account implements Serializable {
     }
 
     //method which gets account events from xml
-    //todo make xml functionality
     public ArrayList<AccountEvents> setEvents(){
         ArrayList<AccountEvents> events=null;
-        //todo make this work, aslo make sure they are from newest to oldest
         //events=xml.getEvents(ID);//should return a event list
         events= sql.getEvents(getAccountNumber());
         return events;
     }
 
-    //todo ????
-    /*public ArrayList<BankCard> setCardsRecyc(){
 
-    }*/
 
     //returns accoubt events
-    public AccountEvents getEvents(){
-        return accEvent;
+    public void getEvents(){
+        event=sql.getEvents(ID);
     }
 
     //couple of methods that allows access to account information
@@ -131,6 +125,9 @@ public class Account implements Serializable {
     //gets a card with a specific number from the list or return null if there isin't one
     public BankCard getACard(String number){
         BankCard proxy;
+        String[] listPr= new String[2];
+        listPr=number.split(" ");
+        number = listPr[0];
         for (int i=0; i<cards.size(); i++){
             proxy = cards.get(i);
             if(number.equals(proxy.getNumber())){
@@ -141,14 +138,13 @@ public class Account implements Serializable {
 
     }
 
-    //todo make a thng that removes a certain object from a arraylist
+
     //removes card from the card list and the database
     public void removerCard(BankCard card){
         cards.remove(card);
-        //sql.remove
+        sql.removeCard(card);
     }
 
-    //todo finish the ui cahin
     //adds a card to the aacount
     public void addCard(String checking, String online, String cash, String credit, String type){
         bc = new BankCard();
@@ -159,7 +155,6 @@ public class Account implements Serializable {
             creditProxy=Integer.getInteger(credit);
         }
 
-        System.out.println(checking+online+cash+credit+ type);//todo remove
         bc.setBankCard(stringU.makeACardNumber(type), type, Integer.parseInt(online), Integer.parseInt(cash), Integer.parseInt(checking), creditProxy, ID);
         if (cards==null){
             cards = new ArrayList<BankCard>();

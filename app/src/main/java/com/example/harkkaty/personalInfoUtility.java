@@ -55,7 +55,6 @@ public class personalInfoUtility {
     public boolean checkInfo(){
         for (int i=0; i<readyList.size()-1; i++){
 
-            System.out.println(i+" "+readyList.get(i));//todo remove system print
             if(readyList.get(i)==false){
 
                 return false;
@@ -74,12 +73,10 @@ public class personalInfoUtility {
     public void removeFromLists(int position){
         readyList.set(position, false);
         allInfoList.set(position, "");
-        System.out.println("removed");//todo remove system print
     }
 
     //sends allinfoList to be made into a user class/xml-file  and also the username and password are passed to database
     //is called from class TunnusLuonti and the method is forward clicklistener
-    //TODO make it work with database and xml
 
 
     //empties both lists for next use

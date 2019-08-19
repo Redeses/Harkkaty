@@ -101,7 +101,7 @@ public class AccountNewActivity extends AppCompatActivity {
             transaction.replace(R.id.variableVIew, fragment);
             setBundle();
             transaction.commit();
-            fragmentKeepr=1;
+            fragmentKeepr=2;
         }
     }
 

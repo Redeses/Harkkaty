@@ -11,8 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,10 @@ public class AccountActivity extends AppCompatActivity {
     private ArrayList<String> stringList;
     private StringUtility StringU;
 
+    //buttons used for hiding and not hiding the buttons whenever needed
+    private Button addBt, allBt, eventBt, bcBt;
+
+    private int proxyInt;
     private String proxy;
 
     //position used when moving from activities to where the spinner position is important
@@ -43,9 +49,13 @@ public class AccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        proxyInt=0;
         manager=getSupportFragmentManager();
         listU = ListUtility.getListUtility();
         user = user.getCurrentUser();
+        //button setters
+        setButtons();
+
         accounts = findViewById(R.id.Accounts);
         makeAccountView = findViewById(R.id.newAccount);
         makeAccountView.setBackgroundColor(getResources().getColor(R.color.white));
@@ -106,14 +116,23 @@ public class AccountActivity extends AppCompatActivity {
 
     //moves to all events fragment, where all past events are shown
     public void showAllEvents(View v){
+        String[] proxylist;
         allEvents = findViewById(R.id.AllEvents);
+        if(proxyInt==1){
+            leaveEvents();
+        }
+        hideButtons();
+        proxyInt =1;
         allEvents.setVisibility(View.VISIBLE);
+        allEvents.setBackgroundColor(getResources().getColor(R.color.white));
         fragment = new AllEvents_fragment();
         allEvents.bringToFront();
         FragmentTransaction transaction = manager.beginTransaction();
         //next sends the name of the account to the fragment so it can be used to get all the events
         Bundle bundle = new Bundle();
-        bundle.putString(proxy, "accountInfo");
+        proxylist = proxy.split(":");
+        proxy=proxylist[0];
+        bundle.putString("accountInfo", proxy);
         fragment.setArguments(bundle);
         Intent intent = new Intent();
         transaction.replace(allEvents.getId(), fragment);
@@ -121,8 +140,10 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     public void leaveEvents(){
+        clearButtons();
         allEvents.setVisibility(View.INVISIBLE);
         FragmentTransaction transaction = manager.beginTransaction();
+        proxyInt=0;
         transaction.detach(fragment);
         transaction.commit();
     }
@@ -159,7 +180,7 @@ public class AccountActivity extends AppCompatActivity {
     //goes to bankCard activity but with current account shown first
     public void goToBankCards(View v){
         if(account==null){
-            //todo toast here
+            Toast.makeText(this.getBaseContext(), "No account available", Toast.LENGTH_LONG).show();
             return;
         }
         Intent newIntent= new Intent(AccountActivity.this, userCards.class);
@@ -176,6 +197,27 @@ public class AccountActivity extends AppCompatActivity {
 
     }
 
+    //
+    //addBt, allBt, eventBt, bcBt;
+    private void setButtons(){
+        addBt=findViewById(R.id.addAccount);
+        allBt=findViewById(R.id.allE);
+        eventBt=findViewById(R.id.newEvents);
+        bcBt=findViewById(R.id.toBankCards);
+    }
 
+    private void hideButtons(){
+        addBt.setVisibility(View.INVISIBLE);
+        allBt.setVisibility(View.INVISIBLE);
+        eventBt.setVisibility(View.INVISIBLE);
+        bcBt.setVisibility(View.INVISIBLE);
+    }
 
+    private void clearButtons(){
+        addBt.setVisibility(View.VISIBLE);
+        allBt.setVisibility(View.VISIBLE);
+        eventBt.setVisibility(View.VISIBLE);
+        bcBt.setVisibility(View.VISIBLE);
+
+    }
 }

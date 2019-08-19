@@ -10,9 +10,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    public SQLUtility testDB; //TODO see if still necesary
+    public SQLUtility testDB;
 
     // Edit text that are used to see what user wrote to username and password textboxes respectively
     protected EditText userN;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if(User.getCount()==0){
-            //todo toast tähän
+            Toast.makeText(this, "No user found", Toast.LENGTH_LONG).show();
             return;
         }
         User.moveToFirst();
@@ -90,12 +91,12 @@ public class MainActivity extends AppCompatActivity {
        newUse.setVisibility(View.INVISIBLE);
    }*/
 
-    //todo last thing make maseter näkymä
+
     protected void swtichToMasteView(){
 
     }
 
-    //todo make switch activity
+
     protected void switchToMainUserView(){
         user = User.getCurrentUser();
         user.setUserID(ID);
