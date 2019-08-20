@@ -275,6 +275,7 @@ public class SQLUtility extends SQLiteOpenHelper {
     public void addBankcard(BankCard bankCard, String pincode, String verificationCode){
         try {
             SQLiteDatabase db = this.getWritableDatabase();
+            System.out.println(bankCard.getCashLimit()+ " "+ bankCard.getCredit());
             ContentValues contentValues = new ContentValues();
             contentValues.put(BankCardCol1, bankCard.getNumber());
             contentValues.put(BankCardCol2, pincode);
@@ -318,21 +319,23 @@ public class SQLUtility extends SQLiteOpenHelper {
 
 
     public void updateLimits(BankCard bankCard){
-        String onlineLimit, cashLimit, checkingLimit, credit;
-        onlineLimit = Double.toString(bankCard.getOnlineLimit());
-        cashLimit = Double.toString(bankCard.getCashLimit());
-        checkingLimit = Double.toString(bankCard.getCheckingLimit());
-        credit = Double.toString(bankCard.getCredit());
+        int onlineLimit, cashLimit, checkingLimit, credit;
+        onlineLimit = bankCard.getOnlineLimit();
+        cashLimit = bankCard.getCashLimit();
+        checkingLimit = bankCard.getCheckingLimit();
+        credit = bankCard.getCredit();
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        String where= BankCardCol1+" = ?";
+        String where= BankCardCol1+" = '"+bankCard.getNumber()+"'";
         String [] proxy = new String[] {bankCard.getNumber()};
         cv.put(BankCardCol5, onlineLimit);
         cv.put(BankCardCol6, cashLimit);
         cv.put(BankCardCol7, checkingLimit);
         cv.put(BankCardCol8,  credit);
-        db.update(Table5_name, cv, where, proxy);
+        db.update(Table5_name, cv, where, null);
+        db.needUpgrade(2);
         db.close();
+
 
     }
 
@@ -388,10 +391,11 @@ public class SQLUtility extends SQLiteOpenHelper {
                 Bacc =new BankCard();
                 cardNumber = cursor.getString(cursor.getColumnIndex(BankCardCol1));
                 type = cursor.getString(cursor.getColumnIndex(BankCardCol4));
-                onlineL = cursor.getInt(cursor.getColumnIndex(BankCardCol1));
-                cashL = cursor.getInt(cursor.getColumnIndex(BankCardCol1));
-                checkingL = cursor.getInt(cursor.getColumnIndex(BankCardCol1));
-                credit = cursor.getInt(cursor.getColumnIndex(BankCardCol1));
+                onlineL = cursor.getInt(cursor.getColumnIndex(BankCardCol5));
+                cashL = cursor.getInt(cursor.getColumnIndex(BankCardCol6));
+                checkingL = cursor.getInt(cursor.getColumnIndex(BankCardCol7));
+                credit = cursor.getInt(cursor.getColumnIndex(BankCardCol8));
+                System.out.println(cardNumber+ " "+ type+ " "+ cashL+ " "+ checkingL);//todo remove
                 Bacc.setBankCard(cardNumber, type, onlineL, cashL, checkingL, credit, accountID);
                 bankCardList.add(Bacc);
                 cursor.moveToNext();
@@ -577,10 +581,12 @@ public class SQLUtility extends SQLiteOpenHelper {
     }
 
     public void removeCard(BankCard card){
-        Cursor cursor;
         SQLiteDatabase db = this.getWritableDatabase();
-        String where = BankCardCol1 +" = "+ card.getNumber();
+        String where = BankCardCol1 +" = '"+ card.getNumber()+"'";
         db.delete(Table5_name, where, null);
+        db.needUpgrade(2);
+        db.close();
+
     }
 
 }

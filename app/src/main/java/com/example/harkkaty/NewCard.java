@@ -34,6 +34,7 @@ public class NewCard extends Fragment {
         online = newCardFragView.findViewById(R.id.OnlineL);
         cash = newCardFragView.findViewById(R.id.CashL);
         credit = newCardFragView.findViewById(R.id.Credit);
+        credit.setText("");
         spineer = newCardFragView.findViewById(R.id.chooseType);
         makeCard = newCardFragView.findViewById(R.id.makeCard);
         setTexts();

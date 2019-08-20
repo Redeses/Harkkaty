@@ -43,13 +43,13 @@ public class CardInfo extends AppCompatActivity {
         }
         proxyString = bc.getNumber();
         tv.setText(proxyString);
-
         proxyInt = bc.getCheckingLimit();
         if(proxyInt==-1){
             proxyString="";
         }else{
             proxyString = Integer.toString(proxyInt);
         }
+
         ChekcingL.setText(proxyString);
 
         proxyInt = bc.getOnlineLimit();
@@ -58,6 +58,8 @@ public class CardInfo extends AppCompatActivity {
         }else{
             proxyString = Integer.toString(proxyInt);
         }
+
+        System.out.println(proxyString);
         WebL.setText(proxyString);
 
         proxyInt = bc.getCashLimit();

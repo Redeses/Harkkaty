@@ -148,11 +148,13 @@ public class Account implements Serializable {
     //adds a card to the aacount
     public void addCard(String checking, String online, String cash, String credit, String type){
         bc = new BankCard();
-        int creditProxy;
-        if (credit.equals("")){
+        int creditProxy=0;
+        if (credit.equals("0")){
             creditProxy =0;
-        }else {
-            creditProxy=Integer.getInteger(credit);
+        }else if(credit==null){
+            creditProxy=0;
+        } else {
+            creditProxy=Integer.parseInt(credit);
         }
 
         bc.setBankCard(stringU.makeACardNumber(type), type, Integer.parseInt(online), Integer.parseInt(cash), Integer.parseInt(checking), creditProxy, ID);
