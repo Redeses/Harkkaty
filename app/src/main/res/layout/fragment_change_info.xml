@@ -82,7 +82,7 @@
         android:layout_marginTop="609dp"
         android:layout_marginEnd="244dp"
         android:layout_marginRight="244dp"
-        android:onClick="cancelA" />
+        android:text="@string/BT_cancel" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="200dp"
@@ -190,5 +190,5 @@
         android:layout_marginTop="612dp"
         android:layout_marginEnd="99dp"
         android:layout_marginRight="99dp"
-        android:onClick="finishInfo" />
+        android:text="Finish" />
 </RelativeLayout>

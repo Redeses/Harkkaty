@@ -69,12 +69,13 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.MyVIewHolder> {
     @Override
     public void onBindViewHolder(MyVIewHolder holder, int position){
         //add stuff
-        if(type ==2){
-            setClickListener();
-        }
+
         String input = recycSrings[position];
         textV = v.findViewById(R.id.Recyc);
         holder.theTextView.setText(input);
+        if(type ==2){
+            setClickListener(holder);
+        }
     }
 
     @Override
@@ -84,11 +85,11 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.MyVIewHolder> {
 
 
     //if the item is clicked when user is in userCards activity then it will move to activity known as
-    private void setClickListener(){
+    private void setClickListener(final MyVIewHolder holder){
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cardNumber = textV.getText().toString();
+                cardNumber = holder.theTextView.getText().toString();
                 acti = (userCards) cont;
                 ((userCards) acti).ToCards(cardNumber);
             }

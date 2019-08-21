@@ -53,7 +53,7 @@ public class personalInfoUtility {
 
     //check if all the boxes have been filled AKA if readylist is all trues
     public boolean checkInfo(){
-        for (int i=0; i<readyList.size()-1; i++){
+        for (int i=0; i<7; i++){
 
             if(readyList.get(i)==false){
 

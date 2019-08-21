@@ -78,11 +78,6 @@ public class userCards extends AppCompatActivity {
 
             }
         });
-        if(accs.size()!=0) {
-            account = accs.get(0);
-            account = user.getSelectedAccount(account.getAccountNumber()+": ");
-            setViewCards();
-        }
 
     }
 
@@ -90,7 +85,7 @@ public class userCards extends AppCompatActivity {
         bankCardList= account.getCards();
         String[] str = StringU.getCards(bankCardList);
         if(str.length==0){
-            return;
+            str=new String[]{""};
         }
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recycAdapter = new myAdapter(str, this);

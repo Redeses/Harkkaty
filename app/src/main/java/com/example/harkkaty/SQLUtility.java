@@ -395,7 +395,6 @@ public class SQLUtility extends SQLiteOpenHelper {
                 cashL = cursor.getInt(cursor.getColumnIndex(BankCardCol6));
                 checkingL = cursor.getInt(cursor.getColumnIndex(BankCardCol7));
                 credit = cursor.getInt(cursor.getColumnIndex(BankCardCol8));
-                System.out.println(cardNumber+ " "+ type+ " "+ cashL+ " "+ checkingL);//todo remove
                 Bacc.setBankCard(cardNumber, type, onlineL, cashL, checkingL, credit, accountID);
                 bankCardList.add(Bacc);
                 cursor.moveToNext();

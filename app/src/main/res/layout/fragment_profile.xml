@@ -147,7 +147,7 @@
         android:layout_marginTop="520dp"
         android:layout_marginEnd="266dp"
         android:layout_marginRight="266dp"
-        android:onClick="changePassword" />
+        android:text="Change password" />
 
     <Button
         android:id="@+id/infoChange"
@@ -156,9 +156,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="519dp"
-        android:layout_marginEnd="94dp"
-        android:layout_marginRight="94dp"
-        android:onClick="changeInfo" />
+        android:layout_marginTop="521dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginRight="31dp"
+        android:text="change personal info" />
 
 </RelativeLayout>

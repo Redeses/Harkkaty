@@ -36,7 +36,7 @@ public class password extends Fragment {
         newPassword = passwordFragView.findViewById(R.id.newP);
         ReNewPassword = passwordFragView.findViewById(R.id.reNewP);
         change = (Button) passwordFragView.findViewById(R.id.confirm);
-        back = (Button) passwordFragView.findViewById(R.id.confirm);
+        back = (Button) passwordFragView.findViewById(R.id.backStep);
         setButtonListeners();
         Intent intent = new Intent();
         ID= intent.getStringExtra("ID");

@@ -35,7 +35,6 @@ public class Home extends AppCompatActivity {
         profileSettings = findViewById(R.id.profileSettings);
         profileSettings.setBackgroundColor(getResources().getColor(R.color.white));
         profileSettings.setVisibility(View.INVISIBLE);
-        settings=(Button) findViewById(R.id.setting);
         manager = getSupportFragmentManager();
 
     }

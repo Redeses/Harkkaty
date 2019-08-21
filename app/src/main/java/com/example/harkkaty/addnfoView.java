@@ -289,24 +289,31 @@ public class addnfoView extends Fragment{
     private void redColorSetter(){
         if (PersonUtil.returnBool(0)==false){
             firstName.setTextColor(Color.RED);
+            System.out.println(0);
         }
         if (PersonUtil.returnBool(1)==false){
             lastName.setTextColor(Color.RED);
+            System.out.println(11);
         }
         if (PersonUtil.returnBool(2)==false){
             birthDate.setTextColor(Color.RED);
+            System.out.println(2);
         }
         if (PersonUtil.returnBool(3)==false){
             countries.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.red, null));
+            System.out.println(3);
         }
         if (PersonUtil.returnBool(4)==false){
             address.setTextColor(Color.RED);
+            System.out.println(4);
         }
         if (PersonUtil.returnBool(5)==false){
             phone.setTextColor(Color.RED);
+            System.out.println(5);
         }
         if (PersonUtil.returnBool(6)==false){
             emailE.setTextColor(Color.RED);
+            System.out.println(6);
         }
 
     }
